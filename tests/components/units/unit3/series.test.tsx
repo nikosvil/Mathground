@@ -14,6 +14,7 @@ vi.mock('@react-three/drei', () => ({
 
 import { TaylorSeriesScene } from '@/components/units/unit3/TaylorSeriesScene'
 import { PartialSumsScene } from '@/components/units/unit3/PartialSumsScene'
+import { SequenceScene } from '@/components/units/unit3/SequenceScene'
 
 describe('TaylorSeriesScene', () => {
   it('renders without throwing', () => {
@@ -39,5 +40,24 @@ describe('PartialSumsScene', () => {
       />
     )
     expect(screen.getByTestId('canvas')).toBeDefined()
+  })
+})
+
+describe('SequenceScene', () => {
+  it('renders without throwing', () => {
+    expect(() =>
+      render(<SequenceScene termFn="1/n" N={20} />)
+    ).not.toThrow()
+  })
+
+  it('canvas is present in the DOM', () => {
+    render(<SequenceScene termFn="(-1)^n / n" N={15} />)
+    expect(screen.getByTestId('canvas')).toBeDefined()
+  })
+
+  it('handles divergent sequences gracefully', () => {
+    expect(() =>
+      render(<SequenceScene termFn="n / 10" N={30} />)
+    ).not.toThrow()
   })
 })

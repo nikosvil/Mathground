@@ -34,6 +34,7 @@ vi.mock('@/lib/math/geometry/revolution', () => ({
 
 import { VolumesRevolutionScene } from '@/components/units/unit1/VolumesRevolutionScene'
 import { VolumeFormulaDisplay } from '@/components/units/unit1/VolumeFormulaDisplay'
+import { AreasBetweenCurvesScene } from '@/components/units/unit1/AreasBetweenCurvesScene'
 
 describe('VolumesRevolutionScene', () => {
   it('renders without throwing for disk paradigm', () => {
@@ -87,5 +88,24 @@ describe('VolumeFormulaDisplay', () => {
     )
     expect(screen.getByText(/volume/i)).toBeDefined()
     expect(screen.getAllByText(/π/i).length).toBeGreaterThan(0)
+  })
+})
+
+describe('AreasBetweenCurvesScene', () => {
+  it('renders without throwing', () => {
+    expect(() =>
+      render(<AreasBetweenCurvesScene fnTop="1" fnBottom="x^2" a={-1} b={1} />)
+    ).not.toThrow()
+  })
+
+  it('canvas is present in the DOM', () => {
+    render(<AreasBetweenCurvesScene fnTop="cos(x)" fnBottom="x/3 - 0.3" a={0} b={2} />)
+    expect(screen.getByTestId('canvas')).toBeDefined()
+  })
+
+  it('handles invalid expressions gracefully', () => {
+    expect(() =>
+      render(<AreasBetweenCurvesScene fnTop="2x" fnBottom="bad((" a={0} b={1} />)
+    ).not.toThrow()
   })
 })
