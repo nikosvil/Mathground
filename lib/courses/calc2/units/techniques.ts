@@ -14,11 +14,11 @@ export const techniquesUnit: Unit = {
       paradigms: [
         {
           id: 'gallery',
-          label: 'Formula Gallery',
+          title: 'Formula Gallery',
           description: 'Visual derivations of standard integral forms',
           visualizationComponent: 'TrigIntegrals',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'a', label: 'a', min: 0, max: 3, step: 0.1, default: 0 },
             { id: 'b', label: 'b', min: 0.5, max: 7, step: 0.1, default: 3.14 },
           ],
@@ -34,22 +34,22 @@ export const techniquesUnit: Unit = {
       paradigms: [
         {
           id: 'geometric',
-          label: 'Geometric View',
+          title: 'Geometric View',
           description: 'Rectangle area decomposition: uv = ∫u dv + ∫v du',
           visualizationComponent: 'IntegrationByParts',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'a', label: 'a', min: 0, max: 2, step: 0.1, default: 0 },
             { id: 'b', label: 'b', min: 1, max: 5, step: 0.1, default: 2 },
           ],
         },
         {
           id: 'tabular',
-          label: 'Tabular Method',
+          title: 'Tabular Method',
           description: 'Animated tabular integration by parts',
           visualizationComponent: 'IntegrationByParts',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'steps', label: 'Steps', min: 1, max: 5, step: 1, default: 3 },
           ],
         },
@@ -64,32 +64,32 @@ export const techniquesUnit: Unit = {
       paradigms: [
         {
           id: 'distinct-roots',
-          label: 'Distinct Roots',
+          title: 'Distinct Roots',
           description: 'Decompose 1/((x-a)(x-b)) into partial fractions',
           visualizationComponent: 'PartialFractions',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'a', label: 'root a', min: -5, max: 0, step: 0.5, default: -2 },
             { id: 'b', label: 'root b', min: 0, max: 5, step: 0.5, default: 3 },
           ],
         },
         {
           id: 'repeated-root',
-          label: 'Repeated Root',
+          title: 'Repeated Root',
           description: 'Handle (x-a)² in denominator',
           visualizationComponent: 'PartialFractions',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'a', label: 'root a', min: -3, max: 3, step: 0.5, default: 1 },
           ],
         },
         {
           id: 'irreducible-quadratic',
-          label: 'Irreducible Quadratic',
+          title: 'Irreducible Quadratic',
           description: 'Handle ax²+bx+c (no real roots) in denominator',
           visualizationComponent: 'PartialFractions',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'a', label: 'a', min: 1, max: 5, step: 0.5, default: 1 },
             { id: 'b', label: 'b', min: 0, max: 3, step: 0.5, default: 0 },
             { id: 'c', label: 'c', min: 1, max: 5, step: 0.5, default: 1 },
@@ -106,22 +106,22 @@ export const techniquesUnit: Unit = {
       paradigms: [
         {
           id: 'sin-cos',
-          label: 'sin^m cos^n',
+          title: 'sin^m cos^n',
           description: 'Strategy selection for ∫sin^m cos^n dx',
           visualizationComponent: 'TrigIntegrals',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'm', label: 'm (sin power)', min: 1, max: 7, step: 1, default: 2 },
             { id: 'n', label: 'n (cos power)', min: 1, max: 7, step: 1, default: 3 },
           ],
         },
         {
           id: 'tan-sec',
-          label: 'tan^m sec^n',
+          title: 'tan^m sec^n',
           description: 'Strategy for ∫tan^m sec^n dx',
           visualizationComponent: 'TrigIntegrals',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'm', label: 'm', min: 1, max: 5, step: 1, default: 2 },
             { id: 'n', label: 'n', min: 1, max: 5, step: 1, default: 2 },
           ],
@@ -137,33 +137,33 @@ export const techniquesUnit: Unit = {
       paradigms: [
         {
           id: 'a2-x2',
-          label: '√(a²−x²)',
+          title: '√(a²−x²)',
           description: 'Triangle for x = a·sin(θ), √(a²−x²) = a·cos(θ)',
           visualizationComponent: 'TrigSubstitution',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'a', label: 'a', min: 0.5, max: 5, step: 0.5, default: 2 },
             { id: 'x', label: 'x', min: 0, max: 1, step: 0.05, default: 0.5 },
           ],
         },
         {
           id: 'a2+x2',
-          label: '√(a²+x²)',
+          title: '√(a²+x²)',
           description: 'Triangle for x = a·tan(θ), √(a²+x²) = a·sec(θ)',
           visualizationComponent: 'TrigSubstitution',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'a', label: 'a', min: 0.5, max: 5, step: 0.5, default: 2 },
             { id: 'x', label: 'x', min: 0, max: 3, step: 0.1, default: 1 },
           ],
         },
         {
           id: 'x2-a2',
-          label: '√(x²−a²)',
+          title: '√(x²−a²)',
           description: 'Triangle for x = a·sec(θ), √(x²−a²) = a·tan(θ)',
           visualizationComponent: 'TrigSubstitution',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'a', label: 'a', min: 0.5, max: 4, step: 0.5, default: 1 },
             { id: 'x', label: 'x', min: 1, max: 5, step: 0.1, default: 2 },
           ],
@@ -179,11 +179,11 @@ export const techniquesUnit: Unit = {
       paradigms: [
         {
           id: 'riemann',
-          label: 'Riemann Sums',
+          title: 'Riemann Sums',
           description: 'Left, right, and midpoint Riemann sums',
           visualizationComponent: 'NumericalIntegration',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'n', label: 'n (rectangles)', min: 2, max: 50, step: 1, default: 8 },
             { id: 'a', label: 'a', min: 0, max: 1, step: 0.1, default: 0 },
             { id: 'b', label: 'b', min: 1, max: 7, step: 0.1, default: 3.14 },
@@ -191,11 +191,11 @@ export const techniquesUnit: Unit = {
         },
         {
           id: 'trapezoid',
-          label: 'Trapezoid Rule',
+          title: 'Trapezoid Rule',
           description: 'Trapezoidal approximation with error bound',
           visualizationComponent: 'NumericalIntegration',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'n', label: 'n', min: 2, max: 50, step: 1, default: 8 },
             { id: 'a', label: 'a', min: 0, max: 1, step: 0.1, default: 0 },
             { id: 'b', label: 'b', min: 1, max: 7, step: 0.1, default: 3.14 },
@@ -203,11 +203,11 @@ export const techniquesUnit: Unit = {
         },
         {
           id: 'simpsons',
-          label: "Simpson's Rule",
+          title: "Simpson's Rule",
           description: "Simpson's 1/3 rule with error bound",
           visualizationComponent: 'NumericalIntegration',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'n', label: 'n (must be even)', min: 2, max: 50, step: 2, default: 8 },
             { id: 'a', label: 'a', min: 0, max: 1, step: 0.1, default: 0 },
             { id: 'b', label: 'b', min: 1, max: 7, step: 0.1, default: 3.14 },
@@ -224,22 +224,22 @@ export const techniquesUnit: Unit = {
       paradigms: [
         {
           id: 'infinite-bound',
-          label: 'Infinite Bound',
+          title: 'Infinite Bound',
           description: '∫₁^B f(x) dx as B → ∞',
           visualizationComponent: 'ImproperIntegrals',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'p', label: 'p (exponent)', min: 0.1, max: 3, step: 0.1, default: 2 },
             { id: 'B', label: 'B (upper limit)', min: 2, max: 100, step: 1, default: 20 },
           ],
         },
         {
           id: 'vertical-asymptote',
-          label: 'Vertical Asymptote',
+          title: 'Vertical Asymptote',
           description: '∫_ε^1 f(x) dx as ε → 0⁺',
           visualizationComponent: 'ImproperIntegrals',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'p', label: 'p', min: 0.1, max: 2, step: 0.05, default: 0.5 },
             { id: 'eps', label: 'ε', min: 0.001, max: 0.5, step: 0.005, default: 0.1 },
           ],

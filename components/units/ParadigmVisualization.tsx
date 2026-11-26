@@ -36,7 +36,7 @@ export function ParadigmVisualization({
   if (topicId === 'volumes-disks-washers' || topicId === 'volumes-shells') {
     const revType = getRevolutionParadigm(paradigm.id)
     if (revType) {
-      const fn = paradigm.inputs.type === 'single' ? paradigm.inputs.fn : 'x^2'
+      const fn = paradigm.inputs.type === 'single' ? (paradigm.inputs.fn ?? 'x^2') : 'x^2'
       const innerFn = paradigm.inputs.type === 'single' ? paradigm.inputs.fn2 : undefined
       const a = sliderValues.a ?? 0
       const b = sliderValues.b ?? 1
@@ -74,7 +74,7 @@ export function ParadigmVisualization({
 
   // Unit 2 — integration techniques: 2D function plots
   if (topicId.includes('integration') || topicId.includes('techniques')) {
-    const fn = paradigm.inputs.type === 'single' ? paradigm.inputs.fn : 'sin(x)'
+    const fn = paradigm.inputs.type === 'single' ? (paradigm.inputs.fn ?? 'sin(x)') : 'sin(x)'
     const a = sliderValues.a ?? -3
     const b = sliderValues.b ?? 3
     return (
@@ -86,7 +86,7 @@ export function ParadigmVisualization({
 
   // Unit 3 — sequences & series
   if (topicId.includes('series') || topicId.includes('sequence') || topicId.includes('taylor')) {
-    const fn = paradigm.inputs.type === 'single' ? paradigm.inputs.fn : 'sin(x)'
+    const fn = paradigm.inputs.type === 'single' ? (paradigm.inputs.fn ?? 'sin(x)') : 'sin(x)'
     const degree = Math.round(sliderValues.degree ?? 5)
     if (paradigm.id.includes('partial') || paradigm.id.includes('sum')) {
       const termFn = (n: number) => {
@@ -119,7 +119,7 @@ export function ParadigmVisualization({
   }
 
   if (topicId.includes('polar')) {
-    const rFn = paradigm.inputs.type === 'single' ? paradigm.inputs.fn : '1 + cos(θ)'
+    const rFn = paradigm.inputs.type === 'single' ? (paradigm.inputs.fn ?? '1 + cos(θ)') : '1 + cos(θ)'
     return (
       <div className="h-full w-full">
         <PolarCurveScene rFn={rFn} thetaMin={0} thetaMax={6.28} />
@@ -130,7 +130,7 @@ export function ParadigmVisualization({
   // Fallback for unimplemented topics
   return (
     <div className="flex h-full items-center justify-center text-gray-500">
-      <p>Visualization coming soon for <strong className="text-gray-300">{paradigm.title}</strong></p>
+      <p>Visualization coming soon for <strong className="text-gray-300">{paradigm.id}</strong></p>
     </div>
   )
 }

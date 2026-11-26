@@ -18,7 +18,7 @@ export function SliderPanel({ sliders, values, onChange }: SliderPanelProps) {
               {s.label}
             </label>
             <span className="font-mono text-xs text-gray-400">
-              {(values[s.id] ?? s.defaultValue).toFixed(2)}
+              {(values[s.id] ?? s.default).toFixed(2)}
             </span>
           </div>
           <input
@@ -27,7 +27,7 @@ export function SliderPanel({ sliders, values, onChange }: SliderPanelProps) {
             min={s.min}
             max={s.max}
             step={s.step}
-            value={values[s.id] ?? s.defaultValue}
+            value={values[s.id] ?? s.default}
             onChange={(e) => onChange(s.id, parseFloat(e.target.value))}
             className="h-1.5 w-full cursor-pointer appearance-none rounded-full bg-gray-700 accent-blue-500"
           />

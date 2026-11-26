@@ -35,22 +35,17 @@ export function TopicPageClient({ course, unit, topic }: TopicPageClientProps) {
 
   // Initialize store on topic change
   useEffect(() => {
-    setActiveTopic(course.id, unit.id, topic.id)
     const firstParadigm = topic.paradigms[0]
+    setActiveTopic(course.id, unit.id, topic.id, firstParadigm?.id ?? '')
     if (firstParadigm) {
       setActiveParadigm(firstParadigm.id)
-      if (firstParadigm.inputs.type === 'single' || firstParadigm.inputs.type === 'parametric') {
-        initSliders(firstParadigm.inputs.sliders)
-      }
+      initSliders(firstParadigm.sliders)
     }
   }, [topic.id, course.id, unit.id])
 
   const activeParadigm = topic.paradigms.find((p) => p.id === activeParadigmId) ?? topic.paradigms[0]
 
-  const sliders =
-    activeParadigm?.inputs.type === 'single' || activeParadigm?.inputs.type === 'parametric'
-      ? activeParadigm.inputs.sliders
-      : []
+  const sliders = activeParadigm?.sliders ?? []
 
   return (
     <div className="flex h-full flex-col overflow-hidden">
@@ -72,12 +67,10 @@ export function TopicPageClient({ course, unit, topic }: TopicPageClientProps) {
                   key={p.id}
                   onClick={() => {
                     setActiveParadigm(p.id)
-                    if (p.inputs.type === 'single' || p.inputs.type === 'parametric') {
-                      initSliders(p.inputs.sliders)
-                    }
+                    initSliders(p.sliders)
                   }}
                   className={`rounded-md px-3 py-1.5 text-left text-sm transition ${
-                    p.id === activeParadigm?.id
+                    p.id === (activeParadigm?.id ?? '')
                       ? 'bg-blue-600 text-white'
                       : 'text-gray-400 hover:bg-gray-800 hover:text-white'
                   }`}

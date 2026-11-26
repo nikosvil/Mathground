@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import OpenAI from 'openai'
 import { buildSystemPrompt, buildMessages } from '@/lib/ai/prompt'
 import { queryChunks } from '@/lib/rag/retrieval'
-import type { ChatMessage, StreamChunk } from '@/lib/types'
+import type { ChatMessage, RetrievedChunk, StreamChunk } from '@/lib/types'
 
 const client = new OpenAI({
   apiKey: process.env.DEEPSEEK_API_KEY ?? '',
@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
   const query = lastUserMessage?.content ?? ''
 
   // Retrieve relevant context chunks
-  let contextChunks = []
+  let contextChunks: RetrievedChunk[] = []
   try {
     contextChunks = await queryChunks(query, 4)
   } catch {

@@ -26,8 +26,8 @@ describe('TopicBreadcrumb', () => {
 describe('SliderPanel', () => {
   it('renders sliders with labels and values', () => {
     const sliders = [
-      { id: 'a', label: 'Lower bound a', min: -5, max: 0, step: 0.1, defaultValue: -2 },
-      { id: 'b', label: 'Upper bound b', min: 0, max: 5, step: 0.1, defaultValue: 2 },
+      { id: 'a', label: 'Lower bound a', min: -5, max: 0, step: 0.1, default: -2 },
+      { id: 'b', label: 'Upper bound b', min: 0, max: 5, step: 0.1, default: 2 },
     ]
     const values = { a: -2, b: 2 }
     render(<SliderPanel sliders={sliders} values={values} onChange={vi.fn()} />)
@@ -37,7 +37,7 @@ describe('SliderPanel', () => {
 
   it('calls onChange when slider moved', async () => {
     const onChange = vi.fn()
-    const sliders = [{ id: 'n', label: 'Segments n', min: 2, max: 50, step: 1, defaultValue: 10 }]
+    const sliders = [{ id: 'n', label: 'Segments n', min: 2, max: 50, step: 1, default: 10 }]
     render(<SliderPanel sliders={[sliders[0]]} values={{ n: 10 }} onChange={onChange} />)
     const input = screen.getByRole('slider')
     fireEvent.change(input, { target: { value: '11' } })

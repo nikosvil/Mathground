@@ -12,23 +12,27 @@ export interface SingleInputSchema {
   type: 'single'
   variable: 'x' | 't' | 'θ'
   label: string
+  fn?: string
+  fn2?: string
 }
 
 export interface ParametricInputSchema {
   type: 'parametric'
   variables: ['t']
   labels: ['x(t)', 'y(t)']
+  xFn?: string
+  yFn?: string
 }
 
 export type CustomInputSchema = SingleInputSchema | ParametricInputSchema
 
 export interface Paradigm {
   id: string
-  label: string
+  title: string
   description: string
   visualizationComponent: string
-  customInputSchema: CustomInputSchema
-  defaultSliders: SliderConfig[]
+  inputs: CustomInputSchema
+  sliders: SliderConfig[]
 }
 
 export interface Topic {

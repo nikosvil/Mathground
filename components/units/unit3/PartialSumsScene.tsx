@@ -12,12 +12,12 @@ interface PartialSumsSceneProps {
   label?: string
 }
 
-function Bars({ data }: { data: { n: number; partialSum: number }[] }) {
+function Bars({ data }: { data: { n: number; partial: number }[] }) {
   const meshes = useMemo(() => {
     return data.map((pt) => {
-      const height = Math.abs(pt.partialSum)
-      const y = pt.partialSum / 2
-      return { n: pt.n, height, y, sum: pt.partialSum }
+      const height = Math.abs(pt.partial)
+      const y = pt.partial / 2
+      return { n: pt.n, height, y, sum: pt.partial }
     })
   }, [data])
 

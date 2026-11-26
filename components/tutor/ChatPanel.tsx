@@ -35,7 +35,7 @@ export function ChatPanel() {
     addMessage({ id: uuidv4(), role: 'assistant', content: '', timestamp: Date.now() })
     setIsStreaming(true)
 
-    const model = tutorMode === 'reasoner' ? 'deepseek-reasoner' : 'deepseek-chat'
+    const model = tutorMode === 'reasoning' ? 'deepseek-reasoner' : 'deepseek-chat'
 
     try {
       const res = await fetch('/api/chat', {
@@ -96,11 +96,11 @@ export function ChatPanel() {
         <div className="flex items-center gap-2">
           <select
             value={tutorMode}
-            onChange={(e) => useMathgroundStore.getState().setTutorMode(e.target.value as 'chat' | 'reasoner')}
+            onChange={(e) => useMathgroundStore.getState().setTutorMode(e.target.value as 'chat' | 'reasoning')}
             className="rounded bg-gray-800 px-2 py-0.5 text-xs text-gray-300"
           >
             <option value="chat">Fast</option>
-            <option value="reasoner">Deep Reasoning</option>
+            <option value="reasoning">Deep Reasoning</option>
           </select>
           <button onClick={toggleTutor} className="text-gray-400 hover:text-white" aria-label="Close tutor">
             ✕

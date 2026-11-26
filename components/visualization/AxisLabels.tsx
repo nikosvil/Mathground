@@ -1,5 +1,6 @@
 'use client'
 
+import * as THREE from 'three'
 import { Html } from '@react-three/drei'
 
 interface AxisLabelsProps {
@@ -15,7 +16,7 @@ export function AxisLabels({ xLabel = 'x', yLabel = 'y', zLabel = 'z', extent = 
       {/* X axis */}
       <line>
         <bufferGeometry
-          onUpdate={(geo) => {
+          onUpdate={(geo: THREE.BufferGeometry) => {
             const pts = new Float32Array([-extent, 0, 0, extent, 0, 0])
             geo.setAttribute('position', { array: pts, count: 2, itemSize: 3 } as never)
           }}
@@ -29,7 +30,7 @@ export function AxisLabels({ xLabel = 'x', yLabel = 'y', zLabel = 'z', extent = 
       {/* Y axis */}
       <line>
         <bufferGeometry
-          onUpdate={(geo) => {
+          onUpdate={(geo: THREE.BufferGeometry) => {
             const pts = new Float32Array([0, -extent, 0, 0, extent, 0])
             geo.setAttribute('position', { array: pts, count: 2, itemSize: 3 } as never)
           }}
@@ -43,7 +44,7 @@ export function AxisLabels({ xLabel = 'x', yLabel = 'y', zLabel = 'z', extent = 
       {/* Z axis */}
       <line>
         <bufferGeometry
-          onUpdate={(geo) => {
+          onUpdate={(geo: THREE.BufferGeometry) => {
             const pts = new Float32Array([0, 0, -extent, 0, 0, extent])
             geo.setAttribute('position', { array: pts, count: 2, itemSize: 3 } as never)
           }}

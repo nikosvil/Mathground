@@ -14,33 +14,33 @@ export const applicationsUnit: Unit = {
       paradigms: [
         {
           id: 'standard',
-          label: 'f above g',
+          title: 'f above g',
           description: 'Area where f(x) ≥ g(x) on [a,b]',
           visualizationComponent: 'AreasBetweenCurves',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'a', label: 'a', min: -5, max: 0, step: 0.1, default: -1 },
             { id: 'b', label: 'b', min: 0, max: 5, step: 0.1, default: 1 },
           ],
         },
         {
           id: 'crossed',
-          label: 'Curves cross',
+          title: 'Curves cross',
           description: 'Curves that intersect in the interval',
           visualizationComponent: 'AreasBetweenCurves',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'a', label: 'a', min: -5, max: 0, step: 0.1, default: 0 },
             { id: 'b', label: 'b', min: 0, max: 5, step: 0.1, default: 2 },
           ],
         },
         {
           id: 'horizontal',
-          label: 'Horizontal slices',
+          title: 'Horizontal slices',
           description: 'Integrate with respect to y',
           visualizationComponent: 'AreasBetweenCurves',
-          customInputSchema: { type: 'single', variable: 'x', label: 'x(y)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'x(y)' },
+          sliders: [
             { id: 'a', label: 'a', min: -5, max: 0, step: 0.1, default: 0 },
             { id: 'b', label: 'b', min: 0, max: 5, step: 0.1, default: 2 },
           ],
@@ -56,11 +56,11 @@ export const applicationsUnit: Unit = {
       paradigms: [
         {
           id: 'disk',
-          label: 'Disk Method',
+          title: 'Disk Method',
           description: 'Revolve f(x) around x-axis',
           visualizationComponent: 'VolumesRevolution',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'n', label: 'n (slices)', min: 2, max: 50, step: 1, default: 10 },
             { id: 'a', label: 'a', min: 0, max: 2, step: 0.1, default: 0 },
             { id: 'b', label: 'b', min: 1, max: 5, step: 0.1, default: 4 },
@@ -68,11 +68,11 @@ export const applicationsUnit: Unit = {
         },
         {
           id: 'washer',
-          label: 'Washer Method',
+          title: 'Washer Method',
           description: 'Revolve region between outer and inner curve',
           visualizationComponent: 'VolumesRevolution',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'n', label: 'n (slices)', min: 2, max: 50, step: 1, default: 10 },
             { id: 'a', label: 'a', min: 0, max: 2, step: 0.1, default: 0 },
             { id: 'b', label: 'b', min: 1, max: 5, step: 0.1, default: 4 },
@@ -80,11 +80,11 @@ export const applicationsUnit: Unit = {
         },
         {
           id: 'shifted-axis',
-          label: 'Shifted Axis',
+          title: 'Shifted Axis',
           description: 'Revolution around y = k',
           visualizationComponent: 'VolumesRevolution',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'n', label: 'n (slices)', min: 2, max: 50, step: 1, default: 10 },
             { id: 'a', label: 'a', min: 0, max: 2, step: 0.1, default: 0 },
             { id: 'b', label: 'b', min: 1, max: 5, step: 0.1, default: 4 },
@@ -93,11 +93,11 @@ export const applicationsUnit: Unit = {
         },
         {
           id: 'custom',
-          label: 'Custom f(x)',
+          title: 'Custom f(x)',
           description: 'Enter your own function',
           visualizationComponent: 'VolumesRevolution',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'n', label: 'n (slices)', min: 2, max: 50, step: 1, default: 10 },
             { id: 'a', label: 'a', min: -5, max: 0, step: 0.1, default: 0 },
             { id: 'b', label: 'b', min: 0, max: 5, step: 0.1, default: 3 },
@@ -114,11 +114,11 @@ export const applicationsUnit: Unit = {
       paradigms: [
         {
           id: 'shell',
-          label: 'Shell Method',
+          title: 'Shell Method',
           description: 'Revolve vertical strip around y-axis',
           visualizationComponent: 'VolumesRevolution',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'n', label: 'n (shells)', min: 2, max: 40, step: 1, default: 10 },
             { id: 'a', label: 'a', min: 0, max: 1, step: 0.05, default: 0 },
             { id: 'b', label: 'b', min: 0.5, max: 3, step: 0.05, default: 1 },
@@ -126,11 +126,11 @@ export const applicationsUnit: Unit = {
         },
         {
           id: 'comparison',
-          label: 'Disk vs Shell',
+          title: 'Disk vs Shell',
           description: 'Compare both methods for the same solid',
           visualizationComponent: 'VolumesRevolution',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'n', label: 'n', min: 2, max: 30, step: 1, default: 8 },
             { id: 'a', label: 'a', min: 0, max: 1, step: 0.1, default: 0 },
             { id: 'b', label: 'b', min: 1, max: 4, step: 0.1, default: 2 },
@@ -147,11 +147,11 @@ export const applicationsUnit: Unit = {
       paradigms: [
         {
           id: 'segments',
-          label: 'Line Segments',
+          title: 'Line Segments',
           description: 'Approximate arc with n straight segments',
           visualizationComponent: 'ArcLength',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'n', label: 'n (segments)', min: 2, max: 50, step: 1, default: 8 },
             { id: 'a', label: 'a', min: -5, max: 0, step: 0.1, default: 0 },
             { id: 'b', label: 'b', min: 0, max: 7, step: 0.1, default: 6.28 },
@@ -159,11 +159,11 @@ export const applicationsUnit: Unit = {
         },
         {
           id: 'custom',
-          label: 'Custom f(x)',
+          title: 'Custom f(x)',
           description: 'Enter your own curve',
           visualizationComponent: 'ArcLength',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'n', label: 'n', min: 2, max: 50, step: 1, default: 10 },
             { id: 'a', label: 'a', min: -5, max: 0, step: 0.1, default: 0 },
             { id: 'b', label: 'b', min: 0, max: 7, step: 0.1, default: 3 },
@@ -180,22 +180,22 @@ export const applicationsUnit: Unit = {
       paradigms: [
         {
           id: 'x-axis',
-          label: 'Around x-axis',
+          title: 'Around x-axis',
           description: 'Surface area from revolving f(x) around x-axis',
           visualizationComponent: 'SurfaceRevolution',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'a', label: 'a', min: 0, max: 2, step: 0.1, default: 0 },
             { id: 'b', label: 'b', min: 1, max: 5, step: 0.1, default: 4 },
           ],
         },
         {
           id: 'y-axis',
-          label: 'Around y-axis',
+          title: 'Around y-axis',
           description: 'Surface area from revolving f(x) around y-axis',
           visualizationComponent: 'SurfaceRevolution',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'a', label: 'a', min: 0, max: 1, step: 0.1, default: 0 },
             { id: 'b', label: 'b', min: 1, max: 4, step: 0.1, default: 2 },
           ],
@@ -211,11 +211,11 @@ export const applicationsUnit: Unit = {
       paradigms: [
         {
           id: 'region',
-          label: 'Region CoM',
+          title: 'Region CoM',
           description: 'Center of mass of a planar region',
           visualizationComponent: 'CentersOfMass',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'a', label: 'a', min: 0, max: 1, step: 0.1, default: 0 },
             { id: 'b', label: 'b', min: 1, max: 5, step: 0.1, default: 2 },
             { id: 'rho', label: 'ρ (density)', min: 0.5, max: 5, step: 0.5, default: 1 },
@@ -223,11 +223,11 @@ export const applicationsUnit: Unit = {
         },
         {
           id: 'variable-density',
-          label: 'Variable Density',
+          title: 'Variable Density',
           description: 'Non-uniform density distribution',
           visualizationComponent: 'CentersOfMass',
-          customInputSchema: { type: 'single', variable: 'x', label: 'ρ(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'ρ(x)' },
+          sliders: [
             { id: 'a', label: 'a', min: 0, max: 1, step: 0.1, default: 0 },
             { id: 'b', label: 'b', min: 1, max: 5, step: 0.1, default: 3 },
           ],
@@ -243,11 +243,11 @@ export const applicationsUnit: Unit = {
       paradigms: [
         {
           id: 'spring',
-          label: "Hooke's Law",
+          title: "Hooke's Law",
           description: 'Work done compressing/stretching a spring',
           visualizationComponent: 'Work',
-          customInputSchema: { type: 'single', variable: 'x', label: 'F(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'F(x)' },
+          sliders: [
             { id: 'k', label: 'k (stiffness)', min: 0.5, max: 10, step: 0.5, default: 2 },
             { id: 'a', label: 'a', min: 0, max: 1, step: 0.1, default: 0 },
             { id: 'b', label: 'b', min: 1, max: 5, step: 0.1, default: 3 },
@@ -255,22 +255,22 @@ export const applicationsUnit: Unit = {
         },
         {
           id: 'variable',
-          label: 'Variable Force',
+          title: 'Variable Force',
           description: 'Work done by an arbitrary force F(x)',
           visualizationComponent: 'Work',
-          customInputSchema: { type: 'single', variable: 'x', label: 'F(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'F(x)' },
+          sliders: [
             { id: 'a', label: 'a', min: 0, max: 1, step: 0.1, default: 0 },
             { id: 'b', label: 'b', min: 1, max: 5, step: 0.1, default: 4 },
           ],
         },
         {
           id: 'lifting',
-          label: 'Lifting Work',
+          title: 'Lifting Work',
           description: 'Work against gravity lifting a chain',
           visualizationComponent: 'Work',
-          customInputSchema: { type: 'single', variable: 'x', label: 'ρ(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'ρ(x)' },
+          sliders: [
             { id: 'L', label: 'L (length)', min: 1, max: 10, step: 0.5, default: 5 },
             { id: 'w', label: 'w (weight/ft)', min: 0.5, max: 5, step: 0.5, default: 2 },
           ],
@@ -286,22 +286,22 @@ export const applicationsUnit: Unit = {
       paradigms: [
         {
           id: 'flat-plate',
-          label: 'Flat Vertical Plate',
+          title: 'Flat Vertical Plate',
           description: 'Hydrostatic force on a vertical flat surface',
           visualizationComponent: 'FluidPressure',
-          customInputSchema: { type: 'single', variable: 'x', label: 'w(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'w(x)' },
+          sliders: [
             { id: 'depth', label: 'Depth (m)', min: 1, max: 10, step: 0.5, default: 4 },
             { id: 'width', label: 'Width (m)', min: 1, max: 8, step: 0.5, default: 3 },
           ],
         },
         {
           id: 'submerged',
-          label: 'Submerged Shape',
+          title: 'Submerged Shape',
           description: 'Force on an arbitrary submerged cross-section',
           visualizationComponent: 'FluidPressure',
-          customInputSchema: { type: 'single', variable: 'x', label: 'w(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'w(x)' },
+          sliders: [
             { id: 'depth', label: 'Submersion depth', min: 0, max: 8, step: 0.5, default: 2 },
             { id: 'h', label: 'Height', min: 1, max: 6, step: 0.5, default: 3 },
           ],

@@ -14,31 +14,31 @@ export const seriesUnit: Unit = {
       paradigms: [
         {
           id: 'convergent',
-          label: 'Convergent',
+          title: 'Convergent',
           description: 'a_n → L as n → ∞',
           visualizationComponent: 'Sequences',
-          customInputSchema: { type: 'single', variable: 'x', label: 'a_n' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'a_n' },
+          sliders: [
             { id: 'N', label: 'N terms', min: 5, max: 100, step: 5, default: 30 },
           ],
         },
         {
           id: 'oscillating',
-          label: 'Oscillating',
+          title: 'Oscillating',
           description: 'Oscillates but converges: (-1)^n/n',
           visualizationComponent: 'Sequences',
-          customInputSchema: { type: 'single', variable: 'x', label: 'a_n' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'a_n' },
+          sliders: [
             { id: 'N', label: 'N terms', min: 5, max: 100, step: 5, default: 40 },
           ],
         },
         {
           id: 'divergent',
-          label: 'Divergent',
+          title: 'Divergent',
           description: 'Grows without bound',
           visualizationComponent: 'Sequences',
-          customInputSchema: { type: 'single', variable: 'x', label: 'a_n' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'a_n' },
+          sliders: [
             { id: 'N', label: 'N terms', min: 5, max: 50, step: 5, default: 20 },
           ],
         },
@@ -53,32 +53,32 @@ export const seriesUnit: Unit = {
       paradigms: [
         {
           id: 'geometric',
-          label: 'Geometric Series',
+          title: 'Geometric Series',
           description: 'Σ ar^n, converges when |r| < 1',
           visualizationComponent: 'SeriesPartialSums',
-          customInputSchema: { type: 'single', variable: 'x', label: 'a_n' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'a_n' },
+          sliders: [
             { id: 'r', label: 'r (ratio)', min: -0.99, max: 0.99, step: 0.01, default: 0.5 },
             { id: 'N', label: 'N terms', min: 1, max: 50, step: 1, default: 20 },
           ],
         },
         {
           id: 'telescoping',
-          label: 'Telescoping',
+          title: 'Telescoping',
           description: 'Partial fractions collapse',
           visualizationComponent: 'SeriesPartialSums',
-          customInputSchema: { type: 'single', variable: 'x', label: 'a_n' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'a_n' },
+          sliders: [
             { id: 'N', label: 'N terms', min: 2, max: 50, step: 1, default: 15 },
           ],
         },
         {
           id: 'harmonic',
-          label: 'Harmonic (Divergent)',
+          title: 'Harmonic (Divergent)',
           description: 'Σ 1/n diverges — partial sums grow unbounded',
           visualizationComponent: 'SeriesPartialSums',
-          customInputSchema: { type: 'single', variable: 'x', label: 'a_n' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'a_n' },
+          sliders: [
             { id: 'N', label: 'N terms', min: 5, max: 200, step: 5, default: 50 },
           ],
         },
@@ -93,42 +93,42 @@ export const seriesUnit: Unit = {
       paradigms: [
         {
           id: 'integral-test',
-          label: 'Integral Test',
+          title: 'Integral Test',
           description: 'Compare series to integral of f(x)',
           visualizationComponent: 'ConvergenceTests',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'p', label: 'p', min: 0.5, max: 3, step: 0.1, default: 2 },
             { id: 'N', label: 'N', min: 2, max: 30, step: 1, default: 10 },
           ],
         },
         {
           id: 'comparison-test',
-          label: 'Comparison Test',
+          title: 'Comparison Test',
           description: 'Compare a_n ≤ b_n; b_n convergent → a_n convergent',
           visualizationComponent: 'ConvergenceTests',
-          customInputSchema: { type: 'single', variable: 'x', label: 'a_n' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'a_n' },
+          sliders: [
             { id: 'N', label: 'N terms', min: 5, max: 50, step: 1, default: 20 },
           ],
         },
         {
           id: 'ratio-test',
-          label: 'Ratio Test',
+          title: 'Ratio Test',
           description: 'L = lim |a_{n+1}/a_n|; L < 1 → converges',
           visualizationComponent: 'ConvergenceTests',
-          customInputSchema: { type: 'single', variable: 'x', label: 'a_n' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'a_n' },
+          sliders: [
             { id: 'N', label: 'N', min: 5, max: 50, step: 1, default: 20 },
           ],
         },
         {
           id: 'root-test',
-          label: 'Root Test',
+          title: 'Root Test',
           description: 'L = lim |a_n|^(1/n)',
           visualizationComponent: 'ConvergenceTests',
-          customInputSchema: { type: 'single', variable: 'x', label: 'a_n' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'a_n' },
+          sliders: [
             { id: 'N', label: 'N', min: 5, max: 50, step: 1, default: 20 },
           ],
         },
@@ -143,21 +143,21 @@ export const seriesUnit: Unit = {
       paradigms: [
         {
           id: 'zigzag',
-          label: 'Zigzag Convergence',
+          title: 'Zigzag Convergence',
           description: 'Partial sums oscillate toward the limit',
           visualizationComponent: 'AlternatingSeries',
-          customInputSchema: { type: 'single', variable: 'x', label: 'b_n' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'b_n' },
+          sliders: [
             { id: 'N', label: 'N terms', min: 2, max: 40, step: 1, default: 15 },
           ],
         },
         {
           id: 'error-bound',
-          label: 'Error Bound',
+          title: 'Error Bound',
           description: '|S - S_N| ≤ |a_{N+1}|',
           visualizationComponent: 'AlternatingSeries',
-          customInputSchema: { type: 'single', variable: 'x', label: 'b_n' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'b_n' },
+          sliders: [
             { id: 'N', label: 'N', min: 2, max: 30, step: 1, default: 8 },
           ],
         },
@@ -172,21 +172,21 @@ export const seriesUnit: Unit = {
       paradigms: [
         {
           id: 'geometric-power',
-          label: '1/(1−x)',
+          title: '1/(1−x)',
           description: 'Geometric power series Σ xⁿ, |x| < 1',
           visualizationComponent: 'PowerSeries',
-          customInputSchema: { type: 'single', variable: 'x', label: 'c_n' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'c_n' },
+          sliders: [
             { id: 'N', label: 'Degree N', min: 1, max: 20, step: 1, default: 5 },
           ],
         },
         {
           id: 'radius-of-convergence',
-          label: 'Radius of Convergence',
+          title: 'Radius of Convergence',
           description: 'Visualize the interval where the series converges',
           visualizationComponent: 'PowerSeries',
-          customInputSchema: { type: 'single', variable: 'x', label: 'c_n' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'c_n' },
+          sliders: [
             { id: 'N', label: 'N', min: 1, max: 15, step: 1, default: 6 },
             { id: 'R', label: 'R (radius)', min: 0.5, max: 5, step: 0.5, default: 1 },
           ],
@@ -202,51 +202,51 @@ export const seriesUnit: Unit = {
       paradigms: [
         {
           id: 'sin',
-          label: 'sin(x)',
+          title: 'sin(x)',
           description: 'Degree-N Taylor polynomial for sin(x) at x₀=0',
           visualizationComponent: 'TaylorSeries',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'N', label: 'Degree N', min: 1, max: 15, step: 2, default: 3 },
           ],
         },
         {
           id: 'exp',
-          label: 'eˣ',
+          title: 'eˣ',
           description: 'Degree-N Taylor polynomial for eˣ at x₀=0',
           visualizationComponent: 'TaylorSeries',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'N', label: 'Degree N', min: 1, max: 12, step: 1, default: 4 },
           ],
         },
         {
           id: 'cos',
-          label: 'cos(x)',
+          title: 'cos(x)',
           description: 'Degree-N Taylor polynomial for cos(x) at x₀=0',
           visualizationComponent: 'TaylorSeries',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'N', label: 'Degree N', min: 1, max: 15, step: 2, default: 4 },
           ],
         },
         {
           id: 'ln',
-          label: 'ln(1+x)',
+          title: 'ln(1+x)',
           description: 'Degree-N Taylor polynomial for ln(1+x) at x₀=0',
           visualizationComponent: 'TaylorSeries',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'N', label: 'Degree N', min: 1, max: 12, step: 1, default: 5 },
           ],
         },
         {
           id: 'custom',
-          label: 'Custom f(x)',
+          title: 'Custom f(x)',
           description: 'Enter your own function',
           visualizationComponent: 'TaylorSeries',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'N', label: 'Degree N', min: 1, max: 12, step: 1, default: 4 },
             { id: 'x0', label: 'x₀', min: -3, max: 3, step: 0.1, default: 0 },
           ],
@@ -262,21 +262,21 @@ export const seriesUnit: Unit = {
       paradigms: [
         {
           id: 'square-wave',
-          label: 'Square Wave',
+          title: 'Square Wave',
           description: 'Fourier series approximation of a square wave',
           visualizationComponent: 'TaylorSeries',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'N', label: 'N harmonics', min: 1, max: 20, step: 1, default: 5 },
           ],
         },
         {
           id: 'sawtooth',
-          label: 'Sawtooth Wave',
+          title: 'Sawtooth Wave',
           description: 'Fourier series for the sawtooth function',
           visualizationComponent: 'TaylorSeries',
-          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
-          defaultSliders: [
+          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          sliders: [
             { id: 'N', label: 'N harmonics', min: 1, max: 20, step: 1, default: 5 },
           ],
         },

@@ -6,12 +6,13 @@ const DB_PATH = path.join(process.cwd(), 'data', 'vectors')
 const MODEL = 'Xenova/all-MiniLM-L6-v2'
 const VECTOR_DIM = 384
 
-let _embedder: ((text: string, options?: Record<string, unknown>) => Promise<{ data: Float32Array }>) | null = null
+type EmbedderFn = (text: string, options?: Record<string, unknown>) => Promise<{ data: Float32Array }>
+let _embedder: EmbedderFn | null = null
 
-async function getEmbedder() {
+async function getEmbedder(): Promise<EmbedderFn> {
   if (_embedder) return _embedder
   const { pipeline } = await import('@xenova/transformers')
-  _embedder = await pipeline('feature-extraction', MODEL)
+  _embedder = await pipeline('feature-extraction', MODEL) as unknown as EmbedderFn
   return _embedder
 }
 

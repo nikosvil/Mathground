@@ -21,8 +21,8 @@ function containsOnlyAllowedSymbols(
     return SAFE_SYMBOLS.has(sym) || allowedVariables.includes(sym)
   }
   if (node.type === 'FunctionNode') {
-    const fn = node as math.FunctionNode
-    if (!SAFE_SYMBOLS.has(fn.name)) return false
+    const fn = node as math.FunctionNode<math.SymbolNode>
+    if (!SAFE_SYMBOLS.has(fn.fn.name)) return false
     return fn.args.every((arg) => containsOnlyAllowedSymbols(arg, allowedVariables))
   }
   // OperatorNode, ConstantNode, ParenthesisNode, ArrayNode — recurse into children

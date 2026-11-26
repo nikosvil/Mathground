@@ -146,7 +146,7 @@ export const useMathgroundStore = create<MathgroundStore>((set) => ({
       const history = [...state.chatHistory]
       if (history.length === 0) return {}
       const last = { ...history[history.length - 1] }
-      last.thinkingContent = (last.thinkingContent ?? '') + delta
+      last.thinking = (last.thinking ?? '') + delta
       history[history.length - 1] = last
       return { chatHistory: history }
     }),

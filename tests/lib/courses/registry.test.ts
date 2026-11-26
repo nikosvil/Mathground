@@ -42,12 +42,12 @@ describe('Course Registry', () => {
     }
   })
 
-  it('every paradigm defaultSliders are within [min, max]', () => {
+  it('every paradigm sliders are within [min, max]', () => {
     const course = getCourse('calc2')!
     for (const unit of course.units) {
       for (const topic of unit.topics) {
         for (const p of topic.paradigms) {
-          for (const s of p.defaultSliders) {
+          for (const s of p.sliders) {
             expect(
               s.default,
               `${unit.id}/${topic.id}/${p.id} slider ${s.id} default out of range`

@@ -31,7 +31,7 @@ export function polarCurvePoints(
 
   for (let i = 0; i < n; i++) {
     const theta = thetaMin + i * dTheta
-    const scope = useTheta ? { θ: theta } : { t: theta }
+    const scope: Record<string, number> = useTheta ? { θ: theta } : { t: theta }
     const r = fn(scope)
     if (!isFinite(r)) continue
 
