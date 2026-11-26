@@ -31,6 +31,7 @@ export function TopicPageClient({ course, unit, topic }: TopicPageClientProps) {
     prevStep,
     resetSteps,
     setCameraPreset,
+    setTutorContext,
   } = useMathgroundStore()
 
   // Initialize store on topic change
@@ -40,6 +41,7 @@ export function TopicPageClient({ course, unit, topic }: TopicPageClientProps) {
     if (firstParadigm) {
       setActiveParadigm(firstParadigm.id)
       initSliders(firstParadigm.sliders)
+      setTutorContext(topic.title, firstParadigm.title)
     }
   }, [topic.id, course.id, unit.id])
 
@@ -68,6 +70,7 @@ export function TopicPageClient({ course, unit, topic }: TopicPageClientProps) {
                   onClick={() => {
                     setActiveParadigm(p.id)
                     initSliders(p.sliders)
+                    setTutorContext(topic.title, p.title)
                   }}
                   className={`rounded-md px-3 py-1.5 text-left text-sm transition ${
                     p.id === (activeParadigm?.id ?? '')
