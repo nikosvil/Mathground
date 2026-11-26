@@ -15,6 +15,7 @@ vi.mock('@react-three/drei', () => ({
 import { TaylorSeriesScene } from '@/components/units/unit3/TaylorSeriesScene'
 import { PartialSumsScene } from '@/components/units/unit3/PartialSumsScene'
 import { SequenceScene } from '@/components/units/unit3/SequenceScene'
+import { FourierSeriesScene } from '@/components/units/unit3/FourierSeriesScene'
 
 describe('TaylorSeriesScene', () => {
   it('renders without throwing', () => {
@@ -58,6 +59,42 @@ describe('SequenceScene', () => {
   it('handles divergent sequences gracefully', () => {
     expect(() =>
       render(<SequenceScene termFn="n / 10" N={30} />)
+    ).not.toThrow()
+  })
+})
+
+describe('FourierSeriesScene', () => {
+  it('renders square wave without throwing', () => {
+    expect(() =>
+      render(<FourierSeriesScene waveType="square-wave" N={5} />)
+    ).not.toThrow()
+  })
+
+  it('canvas is present for square wave', () => {
+    render(<FourierSeriesScene waveType="square-wave" N={3} />)
+    expect(screen.getByTestId('canvas')).toBeDefined()
+  })
+
+  it('renders sawtooth wave without throwing', () => {
+    expect(() =>
+      render(<FourierSeriesScene waveType="sawtooth" N={5} />)
+    ).not.toThrow()
+  })
+
+  it('canvas is present for sawtooth wave', () => {
+    render(<FourierSeriesScene waveType="sawtooth" N={10} />)
+    expect(screen.getByTestId('canvas')).toBeDefined()
+  })
+
+  it('renders with N=1 (single harmonic)', () => {
+    expect(() =>
+      render(<FourierSeriesScene waveType="square-wave" N={1} />)
+    ).not.toThrow()
+  })
+
+  it('renders with N=20 (many harmonics, Gibbs visible)', () => {
+    expect(() =>
+      render(<FourierSeriesScene waveType="sawtooth" N={20} />)
     ).not.toThrow()
   })
 })

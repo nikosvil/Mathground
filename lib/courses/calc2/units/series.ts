@@ -264,7 +264,7 @@ export const seriesUnit: Unit = {
           id: 'square-wave',
           title: 'Square Wave',
           description: 'Fourier series approximation of a square wave',
-          visualizationComponent: 'TaylorSeries',
+          visualizationComponent: 'FourierSeries',
           inputs: { type: 'single', variable: 'x', label: 'f(x)' },
           sliders: [
             { id: 'N', label: 'N harmonics', min: 1, max: 20, step: 1, default: 5 },
@@ -274,7 +274,7 @@ export const seriesUnit: Unit = {
           id: 'sawtooth',
           title: 'Sawtooth Wave',
           description: 'Fourier series for the sawtooth function',
-          visualizationComponent: 'TaylorSeries',
+          visualizationComponent: 'FourierSeries',
           inputs: { type: 'single', variable: 'x', label: 'f(x)' },
           sliders: [
             { id: 'N', label: 'N harmonics', min: 1, max: 20, step: 1, default: 5 },
