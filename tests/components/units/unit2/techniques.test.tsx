@@ -16,6 +16,7 @@ import { FunctionPlot2D } from '@/components/units/unit2/FunctionPlot2D'
 import { NumericalIntegrationScene } from '@/components/units/unit2/NumericalIntegrationScene'
 import { IntegrationByPartsScene } from '@/components/units/unit2/IntegrationByPartsScene'
 import { TrigSubstitutionScene } from '@/components/units/unit2/TrigSubstitutionScene'
+import { PartialFractionsScene } from '@/components/units/unit2/PartialFractionsScene'
 
 describe('FunctionPlot2D', () => {
   it('renders a 2D function plot canvas', () => {
@@ -93,6 +94,37 @@ describe('TrigSubstitutionScene', () => {
   it('handles edge case x=0 without throwing', () => {
     expect(() =>
       render(<TrigSubstitutionScene paradigm="a2-x2" a={2} x={0} />)
+    ).not.toThrow()
+  })
+})
+
+describe('PartialFractionsScene', () => {
+  it('renders distinct-roots paradigm without throwing', () => {
+    expect(() =>
+      render(<PartialFractionsScene paradigm="distinct-roots" a={-2} b={3} />)
+    ).not.toThrow()
+  })
+
+  it('distinct-roots scene has a canvas', () => {
+    render(<PartialFractionsScene paradigm="distinct-roots" a={-2} b={3} />)
+    expect(screen.getByTestId('canvas')).toBeDefined()
+  })
+
+  it('renders repeated-root paradigm without throwing', () => {
+    expect(() =>
+      render(<PartialFractionsScene paradigm="repeated-root" a={1} />)
+    ).not.toThrow()
+  })
+
+  it('renders irreducible-quadratic paradigm without throwing', () => {
+    expect(() =>
+      render(<PartialFractionsScene paradigm="irreducible-quadratic" a={1} b={0} c={1} />)
+    ).not.toThrow()
+  })
+
+  it('handles poles coinciding with x=0 without throwing', () => {
+    expect(() =>
+      render(<PartialFractionsScene paradigm="distinct-roots" a={-1} b={1} />)
     ).not.toThrow()
   })
 })

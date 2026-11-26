@@ -12,6 +12,7 @@ const AreasBetweenCurvesScene = dynamic(() => import('./unit1/AreasBetweenCurves
 const FunctionPlot2D = dynamic(() => import('./unit2/FunctionPlot2D').then(m => ({ default: m.FunctionPlot2D })), { ssr: false })
 const IntegrationByPartsScene = dynamic(() => import('./unit2/IntegrationByPartsScene').then(m => ({ default: m.IntegrationByPartsScene })), { ssr: false })
 const TrigSubstitutionScene = dynamic(() => import('./unit2/TrigSubstitutionScene').then(m => ({ default: m.TrigSubstitutionScene })), { ssr: false })
+const PartialFractionsScene = dynamic(() => import('./unit2/PartialFractionsScene').then(m => ({ default: m.PartialFractionsScene })), { ssr: false })
 const NumericalIntegrationScene = dynamic(() => import('./unit2/NumericalIntegrationScene').then(m => ({ default: m.NumericalIntegrationScene })), { ssr: false })
 const TaylorSeriesScene = dynamic(() => import('./unit3/TaylorSeriesScene').then(m => ({ default: m.TaylorSeriesScene })), { ssr: false })
 const PartialSumsScene = dynamic(() => import('./unit3/PartialSumsScene').then(m => ({ default: m.PartialSumsScene })), { ssr: false })
@@ -129,13 +130,26 @@ export function ParadigmVisualization({
     )
   }
 
+  // ── Unit 2: Partial fractions — 3D decomposition scene ────────────────────
+  if (vc === 'PartialFractions') {
+    return (
+      <div className="h-full w-full">
+        <PartialFractionsScene
+          paradigm={paradigm.id as 'distinct-roots' | 'repeated-root' | 'irreducible-quadratic'}
+          a={sv.a ?? -2}
+          b={sv.b ?? 3}
+          c={sv.c ?? 1}
+        />
+      </div>
+    )
+  }
+
   // ── Unit 2: Integration techniques — 2D function plots ─────────────────────
-  if (['TrigIntegrals', 'PartialFractions', 'ImproperIntegrals'].includes(vc)) {
+  if (['TrigIntegrals', 'ImproperIntegrals'].includes(vc)) {
     const fnMap: Record<string, (sv: Record<string, number>) => string> = {
       TrigIntegrals:     (sv) => paradigm.id === 'tan-sec'
                                    ? `tan(x)^${sv.m ?? 2} * sec(x)^2`
                                    : `sin(x)^${sv.m ?? 2} * cos(x)^${sv.n ?? 3}`,
-      PartialFractions:   () => 'sin(x)',
       ImproperIntegrals: (sv) => `1 / x^${sv.p ?? 2}`,
     }
     const getFn = fnMap[vc]
