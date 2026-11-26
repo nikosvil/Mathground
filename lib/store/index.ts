@@ -29,6 +29,8 @@ export interface MathgroundStore {
   isTutorOpen: boolean
   tutorMode: 'chat' | 'reasoning'
   isStreaming: boolean
+  topicTitle: string | null
+  paradigmLabel: string | null
 
   // Session
   sessionId: string
@@ -46,6 +48,7 @@ export interface MathgroundStore {
   setTotalSteps(n: number): void
   resetSteps(): void
   setCameraPreset(preset: '3d' | 'side' | 'top'): void
+  setTutorContext(topicTitle: string, paradigmLabel: string): void
   addMessage(msg: ChatMessage): void
   appendToLastMessage(delta: string): void
   appendToLastThinking(delta: string): void
@@ -87,6 +90,8 @@ export const useMathgroundStore = create<MathgroundStore>((set) => ({
   isTutorOpen: false,
   tutorMode: 'chat',
   isStreaming: false,
+  topicTitle: null,
+  paradigmLabel: null,
 
   sessionId: getOrCreateSessionId(),
 
@@ -127,6 +132,8 @@ export const useMathgroundStore = create<MathgroundStore>((set) => ({
   resetSteps: () => set({ currentStep: 0 }),
 
   setCameraPreset: (preset) => set({ cameraPreset: preset }),
+
+  setTutorContext: (topicTitle, paradigmLabel) => set({ topicTitle, paradigmLabel }),
 
   addMessage: (msg) =>
     set((state) => ({ chatHistory: [...state.chatHistory, msg] })),

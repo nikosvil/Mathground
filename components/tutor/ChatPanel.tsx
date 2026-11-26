@@ -17,6 +17,9 @@ export function ChatPanel() {
     appendToLastThinking,
     setIsStreaming,
     toggleTutor,
+    topicTitle,
+    paradigmLabel,
+    sliderValues,
   } = useMathgroundStore()
 
   const [input, setInput] = useState('')
@@ -45,6 +48,11 @@ export function ChatPanel() {
           messages: useMathgroundStore.getState().chatHistory,
           model,
           sessionId: useMathgroundStore.getState().sessionId,
+          context: {
+            topicTitle: useMathgroundStore.getState().topicTitle ?? undefined,
+            paradigmLabel: useMathgroundStore.getState().paradigmLabel ?? undefined,
+            sliderValues: useMathgroundStore.getState().sliderValues,
+          },
         }),
       })
 
