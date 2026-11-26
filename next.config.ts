@@ -2,9 +2,8 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   transpilePackages: ['three'],
-  experimental: {
-    serverComponentsExternalPackages: ['lancedb', '@xenova/transformers', 'pdf-parse'],
-  },
+  serverExternalPackages: ['@lancedb/lancedb', '@xenova/transformers', 'pdf-parse'],
+  turbopack: {},
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
