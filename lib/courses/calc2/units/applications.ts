@@ -1,0 +1,312 @@
+import type { Unit } from '@/lib/types'
+
+export const applicationsUnit: Unit = {
+  id: 'applications',
+  title: 'Applications of Definite Integrals',
+  thomasChapters: [6],
+  topics: [
+    {
+      id: 'areas-between-curves',
+      title: 'Areas Between Curves',
+      thomasSection: '§6.1',
+      thomasPageStart: 390,
+      defaultParadigm: 'standard',
+      paradigms: [
+        {
+          id: 'standard',
+          label: 'f above g',
+          description: 'Area where f(x) ≥ g(x) on [a,b]',
+          visualizationComponent: 'AreasBetweenCurves',
+          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
+          defaultSliders: [
+            { id: 'a', label: 'a', min: -5, max: 0, step: 0.1, default: -1 },
+            { id: 'b', label: 'b', min: 0, max: 5, step: 0.1, default: 1 },
+          ],
+        },
+        {
+          id: 'crossed',
+          label: 'Curves cross',
+          description: 'Curves that intersect in the interval',
+          visualizationComponent: 'AreasBetweenCurves',
+          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
+          defaultSliders: [
+            { id: 'a', label: 'a', min: -5, max: 0, step: 0.1, default: 0 },
+            { id: 'b', label: 'b', min: 0, max: 5, step: 0.1, default: 2 },
+          ],
+        },
+        {
+          id: 'horizontal',
+          label: 'Horizontal slices',
+          description: 'Integrate with respect to y',
+          visualizationComponent: 'AreasBetweenCurves',
+          customInputSchema: { type: 'single', variable: 'x', label: 'x(y)' },
+          defaultSliders: [
+            { id: 'a', label: 'a', min: -5, max: 0, step: 0.1, default: 0 },
+            { id: 'b', label: 'b', min: 0, max: 5, step: 0.1, default: 2 },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'volumes-disks-washers',
+      title: 'Volumes by Disks & Washers',
+      thomasSection: '§6.2',
+      thomasPageStart: 399,
+      defaultParadigm: 'disk',
+      paradigms: [
+        {
+          id: 'disk',
+          label: 'Disk Method',
+          description: 'Revolve f(x) around x-axis',
+          visualizationComponent: 'VolumesRevolution',
+          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
+          defaultSliders: [
+            { id: 'n', label: 'n (slices)', min: 2, max: 50, step: 1, default: 10 },
+            { id: 'a', label: 'a', min: 0, max: 2, step: 0.1, default: 0 },
+            { id: 'b', label: 'b', min: 1, max: 5, step: 0.1, default: 4 },
+          ],
+        },
+        {
+          id: 'washer',
+          label: 'Washer Method',
+          description: 'Revolve region between outer and inner curve',
+          visualizationComponent: 'VolumesRevolution',
+          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
+          defaultSliders: [
+            { id: 'n', label: 'n (slices)', min: 2, max: 50, step: 1, default: 10 },
+            { id: 'a', label: 'a', min: 0, max: 2, step: 0.1, default: 0 },
+            { id: 'b', label: 'b', min: 1, max: 5, step: 0.1, default: 4 },
+          ],
+        },
+        {
+          id: 'shifted-axis',
+          label: 'Shifted Axis',
+          description: 'Revolution around y = k',
+          visualizationComponent: 'VolumesRevolution',
+          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
+          defaultSliders: [
+            { id: 'n', label: 'n (slices)', min: 2, max: 50, step: 1, default: 10 },
+            { id: 'a', label: 'a', min: 0, max: 2, step: 0.1, default: 0 },
+            { id: 'b', label: 'b', min: 1, max: 5, step: 0.1, default: 4 },
+            { id: 'k', label: 'k (axis)', min: -3, max: 3, step: 0.1, default: -1 },
+          ],
+        },
+        {
+          id: 'custom',
+          label: 'Custom f(x)',
+          description: 'Enter your own function',
+          visualizationComponent: 'VolumesRevolution',
+          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
+          defaultSliders: [
+            { id: 'n', label: 'n (slices)', min: 2, max: 50, step: 1, default: 10 },
+            { id: 'a', label: 'a', min: -5, max: 0, step: 0.1, default: 0 },
+            { id: 'b', label: 'b', min: 0, max: 5, step: 0.1, default: 3 },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'volumes-shells',
+      title: 'Volumes by Cylindrical Shells',
+      thomasSection: '§6.3',
+      thomasPageStart: 408,
+      defaultParadigm: 'shell',
+      paradigms: [
+        {
+          id: 'shell',
+          label: 'Shell Method',
+          description: 'Revolve vertical strip around y-axis',
+          visualizationComponent: 'VolumesRevolution',
+          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
+          defaultSliders: [
+            { id: 'n', label: 'n (shells)', min: 2, max: 40, step: 1, default: 10 },
+            { id: 'a', label: 'a', min: 0, max: 1, step: 0.05, default: 0 },
+            { id: 'b', label: 'b', min: 0.5, max: 3, step: 0.05, default: 1 },
+          ],
+        },
+        {
+          id: 'comparison',
+          label: 'Disk vs Shell',
+          description: 'Compare both methods for the same solid',
+          visualizationComponent: 'VolumesRevolution',
+          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
+          defaultSliders: [
+            { id: 'n', label: 'n', min: 2, max: 30, step: 1, default: 8 },
+            { id: 'a', label: 'a', min: 0, max: 1, step: 0.1, default: 0 },
+            { id: 'b', label: 'b', min: 1, max: 4, step: 0.1, default: 2 },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'arc-length',
+      title: 'Arc Length',
+      thomasSection: '§6.3',
+      thomasPageStart: 414,
+      defaultParadigm: 'segments',
+      paradigms: [
+        {
+          id: 'segments',
+          label: 'Line Segments',
+          description: 'Approximate arc with n straight segments',
+          visualizationComponent: 'ArcLength',
+          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
+          defaultSliders: [
+            { id: 'n', label: 'n (segments)', min: 2, max: 50, step: 1, default: 8 },
+            { id: 'a', label: 'a', min: -5, max: 0, step: 0.1, default: 0 },
+            { id: 'b', label: 'b', min: 0, max: 7, step: 0.1, default: 6.28 },
+          ],
+        },
+        {
+          id: 'custom',
+          label: 'Custom f(x)',
+          description: 'Enter your own curve',
+          visualizationComponent: 'ArcLength',
+          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
+          defaultSliders: [
+            { id: 'n', label: 'n', min: 2, max: 50, step: 1, default: 10 },
+            { id: 'a', label: 'a', min: -5, max: 0, step: 0.1, default: 0 },
+            { id: 'b', label: 'b', min: 0, max: 7, step: 0.1, default: 3 },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'surface-revolution',
+      title: 'Areas of Surfaces of Revolution',
+      thomasSection: '§6.5',
+      thomasPageStart: 424,
+      defaultParadigm: 'x-axis',
+      paradigms: [
+        {
+          id: 'x-axis',
+          label: 'Around x-axis',
+          description: 'Surface area from revolving f(x) around x-axis',
+          visualizationComponent: 'SurfaceRevolution',
+          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
+          defaultSliders: [
+            { id: 'a', label: 'a', min: 0, max: 2, step: 0.1, default: 0 },
+            { id: 'b', label: 'b', min: 1, max: 5, step: 0.1, default: 4 },
+          ],
+        },
+        {
+          id: 'y-axis',
+          label: 'Around y-axis',
+          description: 'Surface area from revolving f(x) around y-axis',
+          visualizationComponent: 'SurfaceRevolution',
+          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
+          defaultSliders: [
+            { id: 'a', label: 'a', min: 0, max: 1, step: 0.1, default: 0 },
+            { id: 'b', label: 'b', min: 1, max: 4, step: 0.1, default: 2 },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'centers-of-mass',
+      title: 'Moments & Centers of Mass',
+      thomasSection: '§6.4',
+      thomasPageStart: 418,
+      defaultParadigm: 'region',
+      paradigms: [
+        {
+          id: 'region',
+          label: 'Region CoM',
+          description: 'Center of mass of a planar region',
+          visualizationComponent: 'CentersOfMass',
+          customInputSchema: { type: 'single', variable: 'x', label: 'f(x)' },
+          defaultSliders: [
+            { id: 'a', label: 'a', min: 0, max: 1, step: 0.1, default: 0 },
+            { id: 'b', label: 'b', min: 1, max: 5, step: 0.1, default: 2 },
+            { id: 'rho', label: 'ρ (density)', min: 0.5, max: 5, step: 0.5, default: 1 },
+          ],
+        },
+        {
+          id: 'variable-density',
+          label: 'Variable Density',
+          description: 'Non-uniform density distribution',
+          visualizationComponent: 'CentersOfMass',
+          customInputSchema: { type: 'single', variable: 'x', label: 'ρ(x)' },
+          defaultSliders: [
+            { id: 'a', label: 'a', min: 0, max: 1, step: 0.1, default: 0 },
+            { id: 'b', label: 'b', min: 1, max: 5, step: 0.1, default: 3 },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'work',
+      title: 'Work',
+      thomasSection: '§6.6',
+      thomasPageStart: 430,
+      defaultParadigm: 'spring',
+      paradigms: [
+        {
+          id: 'spring',
+          label: "Hooke's Law",
+          description: 'Work done compressing/stretching a spring',
+          visualizationComponent: 'Work',
+          customInputSchema: { type: 'single', variable: 'x', label: 'F(x)' },
+          defaultSliders: [
+            { id: 'k', label: 'k (stiffness)', min: 0.5, max: 10, step: 0.5, default: 2 },
+            { id: 'a', label: 'a', min: 0, max: 1, step: 0.1, default: 0 },
+            { id: 'b', label: 'b', min: 1, max: 5, step: 0.1, default: 3 },
+          ],
+        },
+        {
+          id: 'variable',
+          label: 'Variable Force',
+          description: 'Work done by an arbitrary force F(x)',
+          visualizationComponent: 'Work',
+          customInputSchema: { type: 'single', variable: 'x', label: 'F(x)' },
+          defaultSliders: [
+            { id: 'a', label: 'a', min: 0, max: 1, step: 0.1, default: 0 },
+            { id: 'b', label: 'b', min: 1, max: 5, step: 0.1, default: 4 },
+          ],
+        },
+        {
+          id: 'lifting',
+          label: 'Lifting Work',
+          description: 'Work against gravity lifting a chain',
+          visualizationComponent: 'Work',
+          customInputSchema: { type: 'single', variable: 'x', label: 'ρ(x)' },
+          defaultSliders: [
+            { id: 'L', label: 'L (length)', min: 1, max: 10, step: 0.5, default: 5 },
+            { id: 'w', label: 'w (weight/ft)', min: 0.5, max: 5, step: 0.5, default: 2 },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'fluid-pressure',
+      title: 'Fluid Pressures & Forces',
+      thomasSection: '§6.7',
+      thomasPageStart: 437,
+      defaultParadigm: 'flat-plate',
+      paradigms: [
+        {
+          id: 'flat-plate',
+          label: 'Flat Vertical Plate',
+          description: 'Hydrostatic force on a vertical flat surface',
+          visualizationComponent: 'FluidPressure',
+          customInputSchema: { type: 'single', variable: 'x', label: 'w(x)' },
+          defaultSliders: [
+            { id: 'depth', label: 'Depth (m)', min: 1, max: 10, step: 0.5, default: 4 },
+            { id: 'width', label: 'Width (m)', min: 1, max: 8, step: 0.5, default: 3 },
+          ],
+        },
+        {
+          id: 'submerged',
+          label: 'Submerged Shape',
+          description: 'Force on an arbitrary submerged cross-section',
+          visualizationComponent: 'FluidPressure',
+          customInputSchema: { type: 'single', variable: 'x', label: 'w(x)' },
+          defaultSliders: [
+            { id: 'depth', label: 'Submersion depth', min: 0, max: 8, step: 0.5, default: 2 },
+            { id: 'h', label: 'Height', min: 1, max: 6, step: 0.5, default: 3 },
+          ],
+        },
+      ],
+    },
+  ],
+}
