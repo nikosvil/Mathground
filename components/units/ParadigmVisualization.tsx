@@ -14,6 +14,7 @@ const NumericalIntegrationScene = dynamic(() => import('./unit2/NumericalIntegra
 const TaylorSeriesScene = dynamic(() => import('./unit3/TaylorSeriesScene').then(m => ({ default: m.TaylorSeriesScene })), { ssr: false })
 const PartialSumsScene = dynamic(() => import('./unit3/PartialSumsScene').then(m => ({ default: m.PartialSumsScene })), { ssr: false })
 const SequenceScene = dynamic(() => import('./unit3/SequenceScene').then(m => ({ default: m.SequenceScene })), { ssr: false })
+const FourierSeriesScene = dynamic(() => import('./unit3/FourierSeriesScene').then(m => ({ default: m.FourierSeriesScene })), { ssr: false })
 const ParametricCurveScene = dynamic(() => import('./unit4/ParametricCurveScene').then(m => ({ default: m.ParametricCurveScene })), { ssr: false })
 const PolarCurveScene = dynamic(() => import('./unit4/PolarCurveScene').then(m => ({ default: m.PolarCurveScene })), { ssr: false })
 
@@ -175,7 +176,17 @@ export function ParadigmVisualization({
     )
   }
 
-  // ── Unit 3: Taylor / Power / Fourier series ────────────────────────────────
+  // ── Unit 3: Fourier series ─────────────────────────────────────────────────
+  if (vc === 'FourierSeries') {
+    const waveType = paradigm.id === 'sawtooth' ? 'sawtooth' : 'square-wave'
+    return (
+      <div className="h-full w-full">
+        <FourierSeriesScene waveType={waveType} N={Math.max(1, Math.round(sv.N ?? 5))} />
+      </div>
+    )
+  }
+
+  // ── Unit 3: Taylor / Power series ─────────────────────────────────────────
   if (['TaylorSeries', 'PowerSeries'].includes(vc)) {
     const fnMap: Record<string, string> = {
       sin:                     'sin(x)',
@@ -185,8 +196,6 @@ export function ParadigmVisualization({
       custom:                  'sin(x)',
       'geometric-power':       '1/(1-x)',
       'radius-of-convergence': '1/(1-x)',
-      'square-wave':           'sin(x)',
-      sawtooth:                'sin(x)',
     }
     return (
       <div className="h-full w-full">
