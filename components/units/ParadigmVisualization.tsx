@@ -39,6 +39,7 @@ interface ParadigmVisualizationProps {
 export function ParadigmVisualization({
   paradigm,
   sliderValues,
+  cameraPreset,
 }: ParadigmVisualizationProps) {
   const vc = paradigm.visualizationComponent
   const sv = sliderValues
@@ -65,7 +66,7 @@ export function ParadigmVisualization({
     return (
       <div className="flex h-full flex-col gap-2 p-2">
         <div className="flex-1">
-          <VolumesRevolutionScene paradigm={revType} sliderValues={sv} fn={fn} innerFn={innerFn} />
+          <VolumesRevolutionScene paradigm={revType} sliderValues={sv} fn={fn} innerFn={innerFn} cameraPreset={cameraPreset} />
         </div>
         <div className="shrink-0">
           <VolumeFormulaDisplay paradigm={revType} volume={volume} fn={fn} a={a} b={b} innerFn={innerFn} />
