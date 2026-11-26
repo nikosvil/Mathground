@@ -3,6 +3,11 @@
 import type { Paradigm } from '@/lib/types'
 import { VolumesRevolutionScene } from './unit1/VolumesRevolutionScene'
 import { VolumeFormulaDisplay } from './unit1/VolumeFormulaDisplay'
+import { FunctionPlot2D } from './unit2/FunctionPlot2D'
+import { TaylorSeriesScene } from './unit3/TaylorSeriesScene'
+import { PartialSumsScene } from './unit3/PartialSumsScene'
+import { ParametricCurveScene } from './unit4/ParametricCurveScene'
+import { PolarCurveScene } from './unit4/PolarCurveScene'
 import { diskVolumeNumerical } from '@/lib/math/geometry/revolution'
 import { parseExpression } from '@/lib/math/parser'
 
@@ -65,6 +70,61 @@ export function ParadigmVisualization({
         </div>
       )
     }
+  }
+
+  // Unit 2 — integration techniques: 2D function plots
+  if (topicId.includes('integration') || topicId.includes('techniques')) {
+    const fn = paradigm.inputs.type === 'single' ? paradigm.inputs.fn : 'sin(x)'
+    const a = sliderValues.a ?? -3
+    const b = sliderValues.b ?? 3
+    return (
+      <div className="h-full w-full">
+        <FunctionPlot2D fn={fn} xMin={a} xMax={b} label={paradigm.title} />
+      </div>
+    )
+  }
+
+  // Unit 3 — sequences & series
+  if (topicId.includes('series') || topicId.includes('sequence') || topicId.includes('taylor')) {
+    const fn = paradigm.inputs.type === 'single' ? paradigm.inputs.fn : 'sin(x)'
+    const degree = Math.round(sliderValues.degree ?? 5)
+    if (paradigm.id.includes('partial') || paradigm.id.includes('sum')) {
+      const termFn = (n: number) => {
+        const parsed = parseExpression(fn, ['n'])
+        if (!parsed.valid || !parsed.fn) return 0
+        return parsed.fn({ n }) as number
+      }
+      return (
+        <div className="h-full w-full">
+          <PartialSumsScene termFn={termFn} numTerms={Math.round(sliderValues.terms ?? 20)} label={paradigm.title} />
+        </div>
+      )
+    }
+    return (
+      <div className="h-full w-full">
+        <TaylorSeriesScene fn={fn} x0={sliderValues.x0 ?? 0} degree={degree} xMin={-4} xMax={4} />
+      </div>
+    )
+  }
+
+  // Unit 4 — parametric & polar
+  if (topicId.includes('parametric')) {
+    const xFn = paradigm.inputs.type === 'parametric' ? paradigm.inputs.xFn ?? 'cos(t)' : 'cos(t)'
+    const yFn = paradigm.inputs.type === 'parametric' ? paradigm.inputs.yFn ?? 'sin(t)' : 'sin(t)'
+    return (
+      <div className="h-full w-full">
+        <ParametricCurveScene xFn={xFn} yFn={yFn} tMin={0} tMax={6.28} />
+      </div>
+    )
+  }
+
+  if (topicId.includes('polar')) {
+    const rFn = paradigm.inputs.type === 'single' ? paradigm.inputs.fn : '1 + cos(θ)'
+    return (
+      <div className="h-full w-full">
+        <PolarCurveScene rFn={rFn} thetaMin={0} thetaMax={6.28} />
+      </div>
+    )
   }
 
   // Fallback for unimplemented topics
