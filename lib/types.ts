@@ -56,9 +56,10 @@ export interface Course {
 
 // AI types
 export interface ChatMessage {
+  id: string
   role: 'user' | 'assistant'
   content: string
-  thinkingContent?: string
+  thinking?: string
   timestamp: number
 }
 
