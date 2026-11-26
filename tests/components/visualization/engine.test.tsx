@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import * as THREE from 'three'
 
 // Minimal R3F mock so tests run in jsdom
 vi.mock('@react-three/fiber', () => ({
@@ -19,6 +20,10 @@ vi.mock('@react-three/drei', () => ({
   Grid: () => null,
   Line: () => null,
   Html: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+}))
+
+vi.mock('@/lib/math/geometry/parametric', () => ({
+  parametricCurvePoints: () => [{ x: 0, y: 0 }, { x: 1, y: 1 }],
 }))
 
 import { StepController } from '@/components/visualization/StepController'
@@ -48,6 +53,19 @@ describe('StepController', () => {
   it('disables Next on last step', () => {
     render(<StepController currentStep={5} totalSteps={5} onNext={vi.fn()} onPrev={vi.fn()} onReset={vi.fn()} />)
     expect(screen.getByRole('button', { name: /next/i })).toHaveProperty('disabled', true)
+  })
+})
+
+describe('ParametricCurveScene geometry disposal', () => {
+  it('disposes geometry when component unmounts', async () => {
+    const disposeSpy = vi.spyOn(THREE.BufferGeometry.prototype, 'dispose')
+    const { ParametricCurveScene } = await import('@/components/units/unit4/ParametricCurveScene')
+    const { unmount } = render(
+      <ParametricCurveScene xFn="cos(t)" yFn="sin(t)" tMin={0} tMax={6.28} />
+    )
+    unmount()
+    expect(disposeSpy).toHaveBeenCalled()
+    disposeSpy.mockRestore()
   })
 })
 

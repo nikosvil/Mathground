@@ -51,7 +51,8 @@ export function parseExpression(
 
   // Detect implicit multiplication: a letter (including Unicode/Greek) or ( immediately after a digit
   // e.g. "2x", "2θ", "3sin(x)", "2(x+1)" without explicit operator
-  const implicitMulPattern = /\d[a-zA-ZͰ-Ͽ(]/u
+  // Negative lookahead excludes scientific notation: 2e3, 1e-5, 3.14e+2
+  const implicitMulPattern = /\d(?![eE][+\-]?\d)[a-zA-ZͰ-Ͽ(]/u
   if (implicitMulPattern.test(expression)) {
     return {
       valid: false,

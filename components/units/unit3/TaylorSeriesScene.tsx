@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useMemo, useEffect } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
@@ -22,6 +22,8 @@ function PointsCurve({ points, color }: { points: { x: number; y: number }[]; co
       .map((p) => new THREE.Vector3(p.x, p.y, 0))
     return new THREE.BufferGeometry().setFromPoints(pts)
   }, [points])
+
+  useEffect(() => { return () => { geometry?.dispose?.() } }, [geometry])
 
   if (points.length < 2) return null
   return (

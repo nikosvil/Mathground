@@ -17,6 +17,16 @@ describe('buildSystemPrompt', () => {
     expect(prompt.length).toBeGreaterThan(50)
     expect(prompt).toContain('calculus')
   })
+
+  it('includes topic and paradigm context when provided', () => {
+    const prompt = buildSystemPrompt([], {
+      topicTitle: 'Volumes by Disks & Washers',
+      paradigmLabel: 'Disk Method',
+      sliderValues: { a: 0, b: 2 },
+    })
+    expect(prompt).toContain('Volumes by Disks & Washers')
+    expect(prompt).toContain('Disk Method')
+  })
 })
 
 describe('buildMessages', () => {

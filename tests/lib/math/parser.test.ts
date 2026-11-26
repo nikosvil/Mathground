@@ -54,4 +54,15 @@ describe('parseExpression', () => {
     // At x=0 it may return Infinity, but should not throw
     expect(() => r.fn!({ x: 0 })).not.toThrow()
   })
+
+  it('accepts scientific notation 2e3', () => {
+    const r = parseExpression('2e3', ['x'])
+    expect(r.valid).toBe(true)
+  })
+
+  it('accepts scientific notation 1e-5 as a constant', () => {
+    const r = parseExpression('x + 1e-5', ['x'])
+    expect(r.valid).toBe(true)
+    expect(r.fn!({ x: 0 })).toBeCloseTo(0.00001)
+  })
 })

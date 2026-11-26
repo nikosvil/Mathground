@@ -1,8 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import OpenAI from 'openai'
 import { buildSystemPrompt, buildMessages } from '@/lib/ai/prompt'
+import type { PromptContext } from '@/lib/ai/prompt'
 import { queryChunks } from '@/lib/rag/retrieval'
 import type { ChatMessage, RetrievedChunk, StreamChunk } from '@/lib/types'
+
+const ALLOWED_MODELS = ['deepseek-chat', 'deepseek-reasoner'] as const
+type AllowedModel = (typeof ALLOWED_MODELS)[number]
 
 const client = new OpenAI({
   apiKey: process.env.DEEPSEEK_API_KEY ?? '',
@@ -10,7 +14,7 @@ const client = new OpenAI({
 })
 
 export async function POST(req: NextRequest) {
-  let body: { messages: ChatMessage[]; model?: string; sessionId?: string }
+  let body: { messages: ChatMessage[]; model?: string; sessionId?: string; context?: PromptContext }
 
   try {
     body = await req.json()
@@ -18,7 +22,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
   }
 
-  const { messages, model = 'deepseek-chat' } = body
+  const { messages, context } = body
+  const model: AllowedModel = ALLOWED_MODELS.includes(body.model as AllowedModel)
+    ? (body.model as AllowedModel)
+    : 'deepseek-chat'
 
   if (!messages?.length) {
     return NextResponse.json({ error: 'messages required' }, { status: 400 })
@@ -35,7 +42,7 @@ export async function POST(req: NextRequest) {
     // RAG not yet indexed — continue without context
   }
 
-  const systemPrompt = buildSystemPrompt(contextChunks)
+  const systemPrompt = buildSystemPrompt(contextChunks, context)
   const openaiMessages = buildMessages(messages)
   const isReasoner = model === 'deepseek-reasoner'
 

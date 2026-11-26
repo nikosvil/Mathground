@@ -28,6 +28,37 @@ describe('renderLatex', () => {
   })
 })
 
+describe('SSE line buffer assembly', () => {
+  it('assembles a data line split across two chunks', () => {
+    // This tests the buffering logic from ChatPanel's streaming reader
+    // The pattern: incomplete lines are held in buffer until newline arrives
+    const buffer = { current: '' }
+
+    function processChunk(raw: string): string[] {
+      const collected: string[] = []
+      const text = buffer.current + raw
+      const lines = text.split('\n')
+      buffer.current = lines.pop() ?? ''
+      for (const line of lines) {
+        if (line.startsWith('data: ')) {
+          collected.push(line.slice(6))
+        }
+      }
+      return collected
+    }
+
+    const half1 = 'data: {"type":"conte'
+    const half2 = 'nt","delta":"hello"}\n'
+
+    const r1 = processChunk(half1)
+    expect(r1).toHaveLength(0) // incomplete line held in buffer
+
+    const r2 = processChunk(half2)
+    expect(r2).toHaveLength(1)
+    expect(JSON.parse(r2[0])).toEqual({ type: 'content', delta: 'hello' })
+  })
+})
+
 describe('MessageBubble', () => {
   it('renders user message on the right', () => {
     const { container } = render(

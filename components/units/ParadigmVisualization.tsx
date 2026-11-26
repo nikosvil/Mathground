@@ -1,15 +1,27 @@
 'use client'
 
+import { useMemo, useCallback } from 'react'
+import dynamic from 'next/dynamic'
 import type { Paradigm } from '@/lib/types'
-import { VolumesRevolutionScene } from './unit1/VolumesRevolutionScene'
 import { VolumeFormulaDisplay } from './unit1/VolumeFormulaDisplay'
-import { FunctionPlot2D } from './unit2/FunctionPlot2D'
-import { TaylorSeriesScene } from './unit3/TaylorSeriesScene'
-import { PartialSumsScene } from './unit3/PartialSumsScene'
-import { ParametricCurveScene } from './unit4/ParametricCurveScene'
-import { PolarCurveScene } from './unit4/PolarCurveScene'
 import { diskVolumeNumerical } from '@/lib/math/geometry/revolution'
 import { parseExpression } from '@/lib/math/parser'
+
+const VolumesRevolutionScene = dynamic(() => import('./unit1/VolumesRevolutionScene').then(m => ({ default: m.VolumesRevolutionScene })), { ssr: false })
+const FunctionPlot2D = dynamic(() => import('./unit2/FunctionPlot2D').then(m => ({ default: m.FunctionPlot2D })), { ssr: false })
+const TaylorSeriesScene = dynamic(() => import('./unit3/TaylorSeriesScene').then(m => ({ default: m.TaylorSeriesScene })), { ssr: false })
+const PartialSumsScene = dynamic(() => import('./unit3/PartialSumsScene').then(m => ({ default: m.PartialSumsScene })), { ssr: false })
+const ParametricCurveScene = dynamic(() => import('./unit4/ParametricCurveScene').then(m => ({ default: m.ParametricCurveScene })), { ssr: false })
+const PolarCurveScene = dynamic(() => import('./unit4/PolarCurveScene').then(m => ({ default: m.PolarCurveScene })), { ssr: false })
+
+function PartialSumsWrapper({ fn, numTerms, label }: { fn: string; numTerms: number; label: string }) {
+  const parsedTerm = useMemo(() => parseExpression(fn, ['n']), [fn])
+  const termFn = useCallback((n: number) => {
+    if (!parsedTerm.valid || !parsedTerm.fn) return 0
+    return parsedTerm.fn({ n }) as number
+  }, [parsedTerm])
+  return <PartialSumsScene termFn={termFn} numTerms={numTerms} label={label} />
+}
 
 interface ParadigmVisualizationProps {
   courseId: string
@@ -89,14 +101,9 @@ export function ParadigmVisualization({
     const fn = paradigm.inputs.type === 'single' ? (paradigm.inputs.fn ?? 'sin(x)') : 'sin(x)'
     const degree = Math.round(sliderValues.degree ?? 5)
     if (paradigm.id.includes('partial') || paradigm.id.includes('sum')) {
-      const termFn = (n: number) => {
-        const parsed = parseExpression(fn, ['n'])
-        if (!parsed.valid || !parsed.fn) return 0
-        return parsed.fn({ n }) as number
-      }
       return (
         <div className="h-full w-full">
-          <PartialSumsScene termFn={termFn} numTerms={Math.round(sliderValues.terms ?? 20)} label={paradigm.title} />
+          <PartialSumsWrapper fn={fn} numTerms={Math.round(sliderValues.terms ?? 20)} label={paradigm.title} />
         </div>
       )
     }

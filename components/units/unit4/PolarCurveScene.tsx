@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useMemo, useEffect } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
@@ -27,6 +27,8 @@ export function PolarCurveScene({
     const vectors = pts.map((p) => new THREE.Vector3(p.x, p.y, 0))
     return new THREE.BufferGeometry().setFromPoints(vectors)
   }, [rFn, thetaMin, thetaMax, n])
+
+  useEffect(() => { return () => { geometry?.dispose?.() } }, [geometry])
 
   return (
     <Canvas

@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useMemo, useEffect } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
@@ -43,6 +43,8 @@ function FunctionCurve({
     const geo = new THREE.BufferGeometry().setFromPoints(points)
     return geo
   }, [points])
+
+  useEffect(() => { return () => { geometry?.dispose?.() } }, [geometry])
 
   return (
     <line>

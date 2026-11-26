@@ -17,6 +17,7 @@ vi.mock('@lancedb/lancedb', () => ({
         limit: vi.fn().mockReturnThis(),
         toArray: vi.fn().mockResolvedValue([
           { text: 'Integration by parts', source: 'book', page: 42, chunkIndex: 0, totalChunks: 1, id: 'abc', _distance: 0.1 },
+          { text: '', id: '__schema__', source: '', page: 0, chunkIndex: 0, totalChunks: 0, _distance: 0 },
         ]),
       }),
     }),
@@ -26,6 +27,7 @@ vi.mock('@lancedb/lancedb', () => ({
         limit: vi.fn().mockReturnThis(),
         toArray: vi.fn().mockResolvedValue([
           { text: 'Integration by parts', source: 'book', page: 42, chunkIndex: 0, totalChunks: 1, id: 'abc', _distance: 0.1 },
+          { text: '', id: '__schema__', source: '', page: 0, chunkIndex: 0, totalChunks: 0, _distance: 0 },
         ]),
       }),
     }),
@@ -58,5 +60,13 @@ describe('RAG retrieval', () => {
     expect(results.length).toBeGreaterThan(0)
     expect(results[0]).toHaveProperty('score')
     expect(results[0]).toHaveProperty('text')
+  })
+
+  it('queryChunks filters out __schema__ placeholder row', async () => {
+    const { queryChunks } = await import('@/lib/rag/retrieval')
+    const results = await queryChunks('integration by parts', 3)
+    // mock returns one real row + one __schema__ row; only the real row should appear
+    expect(results.every((r) => r.metadata.id !== '__schema__')).toBe(true)
+    expect(results.some((r) => r.text === 'Integration by parts')).toBe(true)
   })
 })

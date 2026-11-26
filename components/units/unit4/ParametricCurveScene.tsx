@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useMemo, useEffect } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
@@ -29,6 +29,8 @@ export function ParametricCurveScene({
     const vectors = pts.map((p) => new THREE.Vector3(p.x, p.y, 0))
     return new THREE.BufferGeometry().setFromPoints(vectors)
   }, [xFn, yFn, tMin, tMax, n])
+
+  useEffect(() => { return () => { geometry?.dispose?.() } }, [geometry])
 
   return (
     <Canvas

@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useMemo, useEffect } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
@@ -40,6 +40,8 @@ function RevolutionMesh({ paradigm, sliderValues, fn, innerFn }: VolumesRevoluti
 
     return null
   }, [paradigm, sliderValues, fn, innerFn])
+
+  useEffect(() => { return () => { geometry?.dispose?.() } }, [geometry])
 
   if (!geometry) return null
 

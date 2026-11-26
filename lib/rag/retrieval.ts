@@ -84,7 +84,7 @@ export async function queryChunks(query: string, topK: number = 5): Promise<Retr
     .limit(topK)
     .toArray()
 
-  return rawResults.map((row) => ({
+  return rawResults.filter((row) => String(row.id) !== '__schema__').map((row) => ({
     text: String(row.text ?? ''),
     metadata: {
       id: String(row.id ?? ''),
