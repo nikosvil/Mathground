@@ -11,6 +11,7 @@ const VolumesRevolutionScene = dynamic(() => import('./unit1/VolumesRevolutionSc
 const AreasBetweenCurvesScene = dynamic(() => import('./unit1/AreasBetweenCurvesScene').then(m => ({ default: m.AreasBetweenCurvesScene })), { ssr: false })
 const FunctionPlot2D = dynamic(() => import('./unit2/FunctionPlot2D').then(m => ({ default: m.FunctionPlot2D })), { ssr: false })
 const IntegrationByPartsScene = dynamic(() => import('./unit2/IntegrationByPartsScene').then(m => ({ default: m.IntegrationByPartsScene })), { ssr: false })
+const TrigSubstitutionScene = dynamic(() => import('./unit2/TrigSubstitutionScene').then(m => ({ default: m.TrigSubstitutionScene })), { ssr: false })
 const NumericalIntegrationScene = dynamic(() => import('./unit2/NumericalIntegrationScene').then(m => ({ default: m.NumericalIntegrationScene })), { ssr: false })
 const TaylorSeriesScene = dynamic(() => import('./unit3/TaylorSeriesScene').then(m => ({ default: m.TaylorSeriesScene })), { ssr: false })
 const PartialSumsScene = dynamic(() => import('./unit3/PartialSumsScene').then(m => ({ default: m.PartialSumsScene })), { ssr: false })
@@ -115,18 +116,26 @@ export function ParadigmVisualization({
     )
   }
 
+  // ── Unit 2: Trig substitution — dedicated 3D geometric scene ──────────────
+  if (vc === 'TrigSubstitution') {
+    return (
+      <div className="h-full w-full">
+        <TrigSubstitutionScene
+          paradigm={paradigm.id as 'a2-x2' | 'a2+x2' | 'x2-a2'}
+          a={sv.a ?? 2}
+          x={sv.x ?? 0.5}
+        />
+      </div>
+    )
+  }
+
   // ── Unit 2: Integration techniques — 2D function plots ─────────────────────
-  if (['TrigIntegrals', 'PartialFractions', 'TrigSubstitution', 'ImproperIntegrals'].includes(vc)) {
+  if (['TrigIntegrals', 'PartialFractions', 'ImproperIntegrals'].includes(vc)) {
     const fnMap: Record<string, (sv: Record<string, number>) => string> = {
       TrigIntegrals:     (sv) => paradigm.id === 'tan-sec'
                                    ? `tan(x)^${sv.m ?? 2} * sec(x)^2`
                                    : `sin(x)^${sv.m ?? 2} * cos(x)^${sv.n ?? 3}`,
       PartialFractions:   () => 'sin(x)',
-      TrigSubstitution:  (sv) => paradigm.id === 'a2-x2'
-                                   ? `sqrt(${(sv.a ?? 2) ** 2} - x^2)`
-                                   : paradigm.id === 'a2+x2'
-                                     ? `1 / (x^2 + ${(sv.a ?? 2) ** 2})`
-                                     : `sqrt(x^2 - ${(sv.a ?? 1) ** 2})`,
       ImproperIntegrals: (sv) => `1 / x^${sv.p ?? 2}`,
     }
     const getFn = fnMap[vc]

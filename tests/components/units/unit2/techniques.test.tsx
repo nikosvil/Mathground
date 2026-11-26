@@ -15,6 +15,7 @@ vi.mock('@react-three/drei', () => ({
 import { FunctionPlot2D } from '@/components/units/unit2/FunctionPlot2D'
 import { NumericalIntegrationScene } from '@/components/units/unit2/NumericalIntegrationScene'
 import { IntegrationByPartsScene } from '@/components/units/unit2/IntegrationByPartsScene'
+import { TrigSubstitutionScene } from '@/components/units/unit2/TrigSubstitutionScene'
 
 describe('FunctionPlot2D', () => {
   it('renders a 2D function plot canvas', () => {
@@ -61,6 +62,37 @@ describe('IntegrationByPartsScene', () => {
   it('renders with different a/b values', () => {
     expect(() =>
       render(<IntegrationByPartsScene paradigm="geometric" a={1} b={3} />)
+    ).not.toThrow()
+  })
+})
+
+describe('TrigSubstitutionScene', () => {
+  it('renders a2-x2 paradigm without throwing', () => {
+    expect(() =>
+      render(<TrigSubstitutionScene paradigm="a2-x2" a={2} x={0.5} />)
+    ).not.toThrow()
+  })
+
+  it('a2-x2 scene has a canvas', () => {
+    render(<TrigSubstitutionScene paradigm="a2-x2" a={2} x={1} />)
+    expect(screen.getByTestId('canvas')).toBeDefined()
+  })
+
+  it('renders a2+x2 paradigm without throwing', () => {
+    expect(() =>
+      render(<TrigSubstitutionScene paradigm="a2+x2" a={2} x={1} />)
+    ).not.toThrow()
+  })
+
+  it('renders x2-a2 paradigm without throwing', () => {
+    expect(() =>
+      render(<TrigSubstitutionScene paradigm="x2-a2" a={1} x={2} />)
+    ).not.toThrow()
+  })
+
+  it('handles edge case x=0 without throwing', () => {
+    expect(() =>
+      render(<TrigSubstitutionScene paradigm="a2-x2" a={2} x={0} />)
     ).not.toThrow()
   })
 })
