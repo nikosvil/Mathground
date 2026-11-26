@@ -65,6 +65,7 @@ export interface ChatMessage {
 export interface StreamChunk {
   type: 'content' | 'thinking' | 'done'
   delta: string
+  error?: string
 }
 
 // RAG types
