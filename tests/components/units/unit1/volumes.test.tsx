@@ -3,7 +3,9 @@ import { render, screen } from '@testing-library/react'
 
 vi.mock('@react-three/fiber', () => ({
   Canvas: ({ children }: { children: React.ReactNode }) => <div data-testid="canvas">{children}</div>,
-  useThree: vi.fn().mockReturnValue({ camera: { position: { set: vi.fn() } } }),
+  useThree: vi.fn().mockReturnValue({
+    camera: { position: { set: vi.fn() }, lookAt: vi.fn() },
+  }),
   useFrame: vi.fn(),
 }))
 vi.mock('@react-three/drei', () => ({
@@ -88,6 +90,47 @@ describe('VolumeFormulaDisplay', () => {
     )
     expect(screen.getByText(/volume/i)).toBeDefined()
     expect(screen.getAllByText(/π/i).length).toBeGreaterThan(0)
+  })
+})
+
+describe('VolumesRevolutionScene camera presets', () => {
+  it('renders with 3d preset without throwing', () => {
+    expect(() =>
+      render(
+        <VolumesRevolutionScene
+          paradigm="disk"
+          sliderValues={{ a: 0, b: 1, n: 20 }}
+          fn="x^2"
+          cameraPreset="3d"
+        />
+      )
+    ).not.toThrow()
+  })
+
+  it('renders with side preset without throwing', () => {
+    expect(() =>
+      render(
+        <VolumesRevolutionScene
+          paradigm="disk"
+          sliderValues={{ a: 0, b: 1, n: 20 }}
+          fn="x^2"
+          cameraPreset="side"
+        />
+      )
+    ).not.toThrow()
+  })
+
+  it('renders with top preset without throwing', () => {
+    expect(() =>
+      render(
+        <VolumesRevolutionScene
+          paradigm="shell"
+          sliderValues={{ a: 0, b: 1, n: 20 }}
+          fn="x^2"
+          cameraPreset="top"
+        />
+      )
+    ).not.toThrow()
   })
 })
 
