@@ -10,6 +10,7 @@ import { parseExpression } from '@/lib/math/parser'
 const VolumesRevolutionScene = dynamic(() => import('./unit1/VolumesRevolutionScene').then(m => ({ default: m.VolumesRevolutionScene })), { ssr: false })
 const AreasBetweenCurvesScene = dynamic(() => import('./unit1/AreasBetweenCurvesScene').then(m => ({ default: m.AreasBetweenCurvesScene })), { ssr: false })
 const FunctionPlot2D = dynamic(() => import('./unit2/FunctionPlot2D').then(m => ({ default: m.FunctionPlot2D })), { ssr: false })
+const IntegrationByPartsScene = dynamic(() => import('./unit2/IntegrationByPartsScene').then(m => ({ default: m.IntegrationByPartsScene })), { ssr: false })
 const NumericalIntegrationScene = dynamic(() => import('./unit2/NumericalIntegrationScene').then(m => ({ default: m.NumericalIntegrationScene })), { ssr: false })
 const TaylorSeriesScene = dynamic(() => import('./unit3/TaylorSeriesScene').then(m => ({ default: m.TaylorSeriesScene })), { ssr: false })
 const PartialSumsScene = dynamic(() => import('./unit3/PartialSumsScene').then(m => ({ default: m.PartialSumsScene })), { ssr: false })
@@ -100,13 +101,26 @@ export function ParadigmVisualization({
     )
   }
 
+  // ── Unit 2: Integration by Parts — dedicated geometric/tabular scene ───────
+  if (vc === 'IntegrationByParts') {
+    return (
+      <div className="h-full w-full">
+        <IntegrationByPartsScene
+          paradigm={paradigm.id as 'geometric' | 'tabular'}
+          a={sv.a ?? 0}
+          b={sv.b ?? 2}
+          steps={Math.round(sv.steps ?? 3)}
+        />
+      </div>
+    )
+  }
+
   // ── Unit 2: Integration techniques — 2D function plots ─────────────────────
-  if (['TrigIntegrals', 'IntegrationByParts', 'PartialFractions', 'TrigSubstitution', 'ImproperIntegrals'].includes(vc)) {
+  if (['TrigIntegrals', 'PartialFractions', 'TrigSubstitution', 'ImproperIntegrals'].includes(vc)) {
     const fnMap: Record<string, (sv: Record<string, number>) => string> = {
       TrigIntegrals:     (sv) => paradigm.id === 'tan-sec'
                                    ? `tan(x)^${sv.m ?? 2} * sec(x)^2`
                                    : `sin(x)^${sv.m ?? 2} * cos(x)^${sv.n ?? 3}`,
-      IntegrationByParts: () => 'x * exp(x)',
       PartialFractions:   () => 'sin(x)',
       TrigSubstitution:  (sv) => paradigm.id === 'a2-x2'
                                    ? `sqrt(${(sv.a ?? 2) ** 2} - x^2)`

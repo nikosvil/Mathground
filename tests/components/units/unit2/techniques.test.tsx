@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react'
 
 vi.mock('@react-three/fiber', () => ({
   Canvas: ({ children }: { children: React.ReactNode }) => <div data-testid="canvas">{children}</div>,
-  useThree: vi.fn().mockReturnValue({ camera: { position: { set: vi.fn() } } }),
+  useThree: vi.fn().mockReturnValue({ camera: { position: { set: vi.fn() }, lookAt: vi.fn() } }),
   useFrame: vi.fn(),
 }))
 vi.mock('@react-three/drei', () => ({
@@ -14,6 +14,7 @@ vi.mock('@react-three/drei', () => ({
 
 import { FunctionPlot2D } from '@/components/units/unit2/FunctionPlot2D'
 import { NumericalIntegrationScene } from '@/components/units/unit2/NumericalIntegrationScene'
+import { IntegrationByPartsScene } from '@/components/units/unit2/IntegrationByPartsScene'
 
 describe('FunctionPlot2D', () => {
   it('renders a 2D function plot canvas', () => {
@@ -30,6 +31,36 @@ describe('FunctionPlot2D', () => {
   it('handles invalid expression gracefully', () => {
     expect(() =>
       render(<FunctionPlot2D fn="2x" xMin={0} xMax={1} label="invalid" />)
+    ).not.toThrow()
+  })
+})
+
+describe('IntegrationByPartsScene', () => {
+  it('renders geometric view without throwing', () => {
+    expect(() =>
+      render(<IntegrationByPartsScene paradigm="geometric" a={0} b={2} />)
+    ).not.toThrow()
+  })
+
+  it('geometric view has a canvas', () => {
+    render(<IntegrationByPartsScene paradigm="geometric" a={0} b={2} />)
+    expect(screen.getByTestId('canvas')).toBeDefined()
+  })
+
+  it('renders tabular view without throwing', () => {
+    expect(() =>
+      render(<IntegrationByPartsScene paradigm="tabular" a={0} b={2} steps={3} />)
+    ).not.toThrow()
+  })
+
+  it('tabular view shows IBP table content', () => {
+    render(<IntegrationByPartsScene paradigm="tabular" a={0} b={2} steps={3} />)
+    expect(document.body.textContent).toContain('eˣ')
+  })
+
+  it('renders with different a/b values', () => {
+    expect(() =>
+      render(<IntegrationByPartsScene paradigm="geometric" a={1} b={3} />)
     ).not.toThrow()
   })
 })
