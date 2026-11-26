@@ -69,12 +69,11 @@ export interface StreamChunk {
 
 // RAG types
 export interface ChunkMetadata {
+  id: string
   source: string
-  chapter: number
-  section: string
-  pageStart: number
-  chunkType: 'body' | 'theorem' | 'definition' | 'example'
-  tokenCount: number
+  page: number
+  chunkIndex: number
+  totalChunks: number
 }
 
 export interface Chunk {
