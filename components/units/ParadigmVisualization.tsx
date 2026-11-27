@@ -24,6 +24,7 @@ const PolarCurveScene = dynamic(() => import('./unit4/PolarCurveScene').then(m =
 const SurfaceRevolutionScene = dynamic(() => import('./unit1/SurfaceRevolutionScene').then(m => ({ default: m.SurfaceRevolutionScene })), { ssr: false })
 const ArcLengthScene = dynamic(() => import('./unit1/ArcLengthScene').then(m => ({ default: m.ArcLengthScene })), { ssr: false })
 const TrigIntegralsScene = dynamic(() => import('./unit2/TrigIntegralsScene').then(m => ({ default: m.TrigIntegralsScene })), { ssr: false })
+const WorkScene = dynamic(() => import('./unit1/WorkScene').then(m => ({ default: m.WorkScene })), { ssr: false })
 
 function PartialSumsWrapper({ fn, numTerms, label }: { fn: string; numTerms: number; label: string }) {
   const parsedTerm = useMemo(() => parseExpression(fn, ['n']), [fn])
@@ -127,8 +128,26 @@ export function ParadigmVisualization({
     )
   }
 
+  // ── Unit 1: Work — 3D spring / variable-force / chain scene ──────────────
+  if (vc === 'Work') {
+    const fn = paradigm.inputs.type === 'single' ? (paradigm.inputs.fn ?? 'x') : 'x'
+    return (
+      <div className="h-full w-full">
+        <WorkScene
+          paradigm={paradigm.id as 'spring' | 'variable' | 'lifting'}
+          fn={fn}
+          k={sv.k ?? 2}
+          a={sv.a ?? 0}
+          b={sv.b ?? 3}
+          L={sv.L ?? 5}
+          w={sv.w ?? 2}
+        />
+      </div>
+    )
+  }
+
   // ── Unit 1/2: Generic function plot (remaining) ────────────────────────────
-  if (['CentersOfMass', 'Work', 'FluidPressure'].includes(vc)) {
+  if (['CentersOfMass', 'FluidPressure'].includes(vc)) {
     const fn = paradigm.inputs.type === 'single' ? (paradigm.inputs.fn ?? 'sin(x)') : 'sin(x)'
     return (
       <div className="h-full w-full">
