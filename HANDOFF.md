@@ -16,7 +16,7 @@ an AI tutor chat panel. Based on Thomas' Calculus 11th Edition.
 | UI | React 19.3.1, Tailwind CSS |
 | 3D | @react-three/fiber v9.8.2, @react-three/drei v10.7.9, Three.js ^0.170 |
 | Math parsing | mathjs (via `lib/math/parser.ts` → `parseExpression`) |
-| AI tutor | OpenAI API (chat panel in `components/tutor/`) |
+| AI tutor | DeepSeek (`deepseek-chat` / `deepseek-reasoner`) via the `openai` SDK with `baseURL: https://api.deepseek.com` — `app/api/chat/route.ts`, UI in `components/tutor/` |
 | Vector search | LanceDB + @xenova/transformers (PDF ingestion pipeline in `scripts/`) |
 | Testing | Vitest — 24 test files, 188 tests, all green |
 | Branch | `claude/affectionate-cerf-v6xkpo` |
@@ -55,8 +55,12 @@ lib/
         parametric-polar.ts         # Unit 4: 5 topics
   math/
     parser.ts                       # parseExpression(fn, vars) → { valid, fn }
-  store.ts                          # Zustand slider state
+  store/index.ts                    # Zustand slider state
+  ai/prompt.ts                      # Tutor system prompt + message builder
+  rag/chunker.ts, rag/retrieval.ts  # PDF chunking + LanceDB query
   types.ts                          # Course / Unit / Topic / Paradigm types
+
+app/api/chat/route.ts               # SSE chat endpoint (DeepSeek + RAG context)
 
 scripts/
   ingest-pdf.ts                     # PDF → LanceDB embeddings (run with npm run ingest)
@@ -135,9 +139,13 @@ git clone https://github.com/nikosvil/Mathground.git
 cd Mathground
 git checkout claude/affectionate-cerf-v6xkpo
 npm install
+cp .env.local.example .env.local   # fill in DEEPSEEK_API_KEY, PDF_PATH, LANCEDB_PATH, MODEL_CACHE_PATH
+npm run ingest                     # one-time: embeds the Thomas PDF into LanceDB (tutor RAG)
 npm run dev
 # → http://localhost:3000
 ```
+
+The 3D scenes work without `.env.local`; only the tutor needs the key and the ingest.
 
 Tests:
 ```bash
@@ -148,8 +156,12 @@ npm test
 
 ## Known Issues / Warnings (non-fatal)
 
+- **Unconfirmed:** the `attribute.getX is not a function` fix (commit 428db61,
+  removing R3F/drei from `transpilePackages`) has not been verified in a browser.
+  Confirm this first.
 - `Attempted to synchronously unmount a root while React was already rendering` —
-  React 19 + R3F v9 race on rapid navigation; cosmetic, no crash.
+  believed to be a React 19 + R3F v9 race on navigation. Also unverified; it may
+  have been a side effect of the THREE dual-instance bug.
 - Lowercase JSX warnings in tests (`<ambientLight />` etc.) — expected; R3F custom
   elements don't go through normal React component resolution in jsdom.
 - MetaMask extension noise in browser console — unrelated to the app.
@@ -159,8 +171,11 @@ npm test
 ## What's Left / Ideas for Next Work
 
 ### High priority
-- **Merge branch to main** — the dev branch `claude/affectionate-cerf-v6xkpo` has
-  never been merged. All 3D work lives there.
+- **`main` is currently broken.** All 19 scenes are already on `main` (merged via
+  PRs), but the React 19 / R3F v9 upgrade and the `next.config.ts` fixes are only
+  on `claude/affectionate-cerf-v6xkpo`. Anyone running `main` gets the
+  `ReactSharedInternals is undefined` crash. Merge the branch once the browser
+  fix is confirmed.
 - **Verify 3D scenes look correct** — the user has only just gotten the dev server
   running. Each scene should be visually reviewed.
 
@@ -177,8 +192,9 @@ npm test
 ### Tech debt
 - `FunctionPlot2D` is imported in `ParadigmVisualization.tsx` but never used —
   should be removed.
-- `components/visualizations/shared/` — unclear if still referenced; audit and clean
-  up if not.
+- `docs/superpowers/plans/2026-11-26-mathground-platform.md` is outdated: it targets
+  Next.js 15 and `components/visualizations/shared/`, but the shared helpers
+  actually live in `components/visualization/`.
 - Vitest mocks for THREE (`BufferGeometry`, `Float32BufferAttribute`) are repeated
   in every test file; could be extracted to a shared setup file.
 
@@ -186,9 +202,10 @@ npm test
 
 ## Attribution Rules (every commit and PR)
 
-**Commit messages must end with:**
+**Commit messages must end with** (the `Co-Authored-By` model name is whichever
+model wrote the commit; the harness supplies the exact lines):
 ```
-Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
+Co-Authored-By: Claude <Model> <noreply@anthropic.com>
 Claude-Session: https://claude.ai/code/session_01YBCM31ocFCQVBvSk4dJBcM
 ```
 
