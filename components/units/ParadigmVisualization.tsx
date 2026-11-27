@@ -23,6 +23,7 @@ const ParametricCurveScene = dynamic(() => import('./unit4/ParametricCurveScene'
 const PolarCurveScene = dynamic(() => import('./unit4/PolarCurveScene').then(m => ({ default: m.PolarCurveScene })), { ssr: false })
 const SurfaceRevolutionScene = dynamic(() => import('./unit1/SurfaceRevolutionScene').then(m => ({ default: m.SurfaceRevolutionScene })), { ssr: false })
 const ArcLengthScene = dynamic(() => import('./unit1/ArcLengthScene').then(m => ({ default: m.ArcLengthScene })), { ssr: false })
+const TrigIntegralsScene = dynamic(() => import('./unit2/TrigIntegralsScene').then(m => ({ default: m.TrigIntegralsScene })), { ssr: false })
 
 function PartialSumsWrapper({ fn, numTerms, label }: { fn: string; numTerms: number; label: string }) {
   const parsedTerm = useMemo(() => parseExpression(fn, ['n']), [fn])
@@ -191,14 +192,15 @@ export function ParadigmVisualization({
     )
   }
 
-  // ── Unit 2: Integration techniques — 2D function plots ─────────────────────
+  // ── Unit 2: Trig integrals — 3D crown above unit circle ───────────────────
   if (vc === 'TrigIntegrals') {
-    const fn = paradigm.id === 'tan-sec'
-      ? `tan(x)^${sv.m ?? 2} * sec(x)^2`
-      : `sin(x)^${sv.m ?? 2} * cos(x)^${sv.n ?? 3}`
     return (
       <div className="h-full w-full">
-        <FunctionPlot2D fn={fn} xMin={sv.a ?? -3} xMax={sv.b ?? 3} label={paradigm.title} />
+        <TrigIntegralsScene
+          paradigm={paradigm.id as 'sin-cos' | 'tan-sec'}
+          m={Math.round(sv.m ?? 2)}
+          n={Math.round(sv.n ?? 3)}
+        />
       </div>
     )
   }
