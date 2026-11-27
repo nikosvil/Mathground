@@ -59,7 +59,7 @@ export const applicationsUnit: Unit = {
           title: 'Disk Method',
           description: 'Revolve f(x) around x-axis',
           visualizationComponent: 'VolumesRevolution',
-          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          inputs: { type: 'single', variable: 'x', label: 'f(x)', fn: 'sqrt(x)' },
           sliders: [
             { id: 'n', label: 'n (slices)', min: 2, max: 50, step: 1, default: 10 },
             { id: 'a', label: 'a', min: 0, max: 2, step: 0.1, default: 0 },
@@ -71,7 +71,7 @@ export const applicationsUnit: Unit = {
           title: 'Washer Method',
           description: 'Revolve region between outer and inner curve',
           visualizationComponent: 'VolumesRevolution',
-          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          inputs: { type: 'single', variable: 'x', label: 'f(x)', fn: 'sqrt(x) + 1', fn2: '0.6' },
           sliders: [
             { id: 'n', label: 'n (slices)', min: 2, max: 50, step: 1, default: 10 },
             { id: 'a', label: 'a', min: 0, max: 2, step: 0.1, default: 0 },
@@ -83,7 +83,7 @@ export const applicationsUnit: Unit = {
           title: 'Shifted Axis',
           description: 'Revolution around y = k',
           visualizationComponent: 'VolumesRevolution',
-          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          inputs: { type: 'single', variable: 'x', label: 'f(x)', fn: 'sqrt(x)' },
           sliders: [
             { id: 'n', label: 'n (slices)', min: 2, max: 50, step: 1, default: 10 },
             { id: 'a', label: 'a', min: 0, max: 2, step: 0.1, default: 0 },
@@ -117,11 +117,11 @@ export const applicationsUnit: Unit = {
           title: 'Shell Method',
           description: 'Revolve vertical strip around y-axis',
           visualizationComponent: 'VolumesRevolution',
-          inputs: { type: 'single', variable: 'x', label: 'f(x)' },
+          inputs: { type: 'single', variable: 'x', label: 'f(x)', fn: '3*x - x^2' },
           sliders: [
             { id: 'n', label: 'n (shells)', min: 2, max: 40, step: 1, default: 10 },
             { id: 'a', label: 'a', min: 0, max: 1, step: 0.05, default: 0 },
-            { id: 'b', label: 'b', min: 0.5, max: 3, step: 0.05, default: 1 },
+            { id: 'b', label: 'b', min: 0.5, max: 3, step: 0.05, default: 3 },
           ],
         },
         {

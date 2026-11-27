@@ -4,7 +4,7 @@ import { useMemo, useCallback } from 'react'
 import dynamic from 'next/dynamic'
 import type { Paradigm } from '@/lib/types'
 import { VolumeFormulaDisplay } from './unit1/VolumeFormulaDisplay'
-import { diskVolumeNumerical } from '@/lib/math/geometry/revolution'
+import { exactVolume, riemannVolume, type RevolutionMethod } from '@/lib/math/volumes'
 import { parseExpression } from '@/lib/math/parser'
 
 const VolumesRevolutionScene = dynamic(() => import('./unit1/VolumesRevolutionScene').then(m => ({ default: m.VolumesRevolutionScene })), { ssr: false })
@@ -56,30 +56,48 @@ export function ParadigmVisualization({
 
   // ── Unit 1: Volumes of revolution ──────────────────────────────────────────
   if (vc === 'VolumesRevolution') {
-    const revType =
-      paradigm.id.includes('disk') || paradigm.id === 'custom' ? 'disk'
-      : paradigm.id.includes('washer') || paradigm.id === 'shifted-axis' ? 'washer'
-      : paradigm.id.includes('shell') || paradigm.id === 'comparison' ? 'shell'
+    const method: RevolutionMethod =
+      paradigm.id === 'washer' ? 'washer'
+      : paradigm.id === 'shell' || paradigm.id === 'comparison' ? 'shell'
       : 'disk'
 
-    const fn = paradigm.inputs.type === 'single' ? (paradigm.inputs.fn ?? 'x^2') : 'x^2'
-    const innerFn = paradigm.inputs.type === 'single' ? paradigm.inputs.fn2 : undefined
+    const fn = paradigm.inputs.type === 'single' ? (paradigm.inputs.fn ?? 'sqrt(x)') : 'sqrt(x)'
+    const innerFn = method === 'washer' && paradigm.inputs.type === 'single' ? paradigm.inputs.fn2 : undefined
     const a = sv.a ?? 0
     const b = sv.b ?? 1
+    const n = Math.round(sv.n ?? 10)
+    const k = paradigm.id === 'shifted-axis' ? (sv.k ?? 0) : 0
 
-    let volume = 0
-    const outerParsed = parseExpression(fn, ['x'])
-    if (outerParsed.valid && outerParsed.fn) {
-      volume = diskVolumeNumerical(outerParsed.fn, a, b, 500).volume
-    }
+    const f = parseExpression(fn, ['x'])
+    const g = innerFn !== undefined ? parseExpression(innerFn, ['x']) : null
+    const spec = f.valid && f.fn
+      ? {
+          method,
+          f: (x: number) => f.fn!({ x }),
+          g: g?.valid && g.fn ? (x: number) => g.fn!({ x }) : undefined,
+          a: Math.min(a, b),
+          b: Math.max(a, b),
+          k,
+        }
+      : null
 
     return (
       <div className="flex h-full flex-col gap-2 p-2">
-        <div className="flex-1">
-          <VolumesRevolutionScene paradigm={revType} sliderValues={sv} fn={fn} innerFn={innerFn} cameraPreset={cameraPreset} />
+        <div className="min-h-0 flex-1">
+          <VolumesRevolutionScene method={method} fn={fn} innerFn={innerFn} a={a} b={b} n={n} k={k} cameraPreset={cameraPreset} />
         </div>
         <div className="shrink-0">
-          <VolumeFormulaDisplay paradigm={revType} volume={volume} fn={fn} a={a} b={b} innerFn={innerFn} />
+          <VolumeFormulaDisplay
+            method={method}
+            fn={fn}
+            innerFn={innerFn}
+            a={Math.min(a, b)}
+            b={Math.max(a, b)}
+            k={k}
+            n={n}
+            riemann={spec ? riemannVolume(spec, n) : NaN}
+            exact={spec ? exactVolume(spec) : NaN}
+          />
         </div>
       </div>
     )
