@@ -22,6 +22,7 @@ const FourierSeriesScene = dynamic(() => import('./unit3/FourierSeriesScene').th
 const ParametricCurveScene = dynamic(() => import('./unit4/ParametricCurveScene').then(m => ({ default: m.ParametricCurveScene })), { ssr: false })
 const PolarCurveScene = dynamic(() => import('./unit4/PolarCurveScene').then(m => ({ default: m.PolarCurveScene })), { ssr: false })
 const SurfaceRevolutionScene = dynamic(() => import('./unit1/SurfaceRevolutionScene').then(m => ({ default: m.SurfaceRevolutionScene })), { ssr: false })
+const ArcLengthScene = dynamic(() => import('./unit1/ArcLengthScene').then(m => ({ default: m.ArcLengthScene })), { ssr: false })
 
 function PartialSumsWrapper({ fn, numTerms, label }: { fn: string; numTerms: number; label: string }) {
   const parsedTerm = useMemo(() => parseExpression(fn, ['n']), [fn])
@@ -110,8 +111,23 @@ export function ParadigmVisualization({
     )
   }
 
-  // ── Unit 1/2: Generic function plot (ArcLength, etc.) ──────────────────────
-  if (['ArcLength', 'CentersOfMass', 'Work', 'FluidPressure'].includes(vc)) {
+  // ── Unit 1: Arc length — chord segment approximation scene ───────────────
+  if (vc === 'ArcLength') {
+    const fn = paradigm.inputs.type === 'single' ? (paradigm.inputs.fn ?? 'sin(x)') : 'sin(x)'
+    return (
+      <div className="h-full w-full">
+        <ArcLengthScene
+          fn={fn}
+          a={sv.a ?? 0}
+          b={sv.b ?? 6.28}
+          n={Math.max(1, Math.round(sv.n ?? 8))}
+        />
+      </div>
+    )
+  }
+
+  // ── Unit 1/2: Generic function plot (remaining) ────────────────────────────
+  if (['CentersOfMass', 'Work', 'FluidPressure'].includes(vc)) {
     const fn = paradigm.inputs.type === 'single' ? (paradigm.inputs.fn ?? 'sin(x)') : 'sin(x)'
     return (
       <div className="h-full w-full">
