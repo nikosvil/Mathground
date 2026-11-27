@@ -13,6 +13,7 @@ const FunctionPlot2D = dynamic(() => import('./unit2/FunctionPlot2D').then(m => 
 const IntegrationByPartsScene = dynamic(() => import('./unit2/IntegrationByPartsScene').then(m => ({ default: m.IntegrationByPartsScene })), { ssr: false })
 const TrigSubstitutionScene = dynamic(() => import('./unit2/TrigSubstitutionScene').then(m => ({ default: m.TrigSubstitutionScene })), { ssr: false })
 const PartialFractionsScene = dynamic(() => import('./unit2/PartialFractionsScene').then(m => ({ default: m.PartialFractionsScene })), { ssr: false })
+const ImproperIntegralsScene = dynamic(() => import('./unit2/ImproperIntegralsScene').then(m => ({ default: m.ImproperIntegralsScene })), { ssr: false })
 const NumericalIntegrationScene = dynamic(() => import('./unit2/NumericalIntegrationScene').then(m => ({ default: m.NumericalIntegrationScene })), { ssr: false })
 const TaylorSeriesScene = dynamic(() => import('./unit3/TaylorSeriesScene').then(m => ({ default: m.TaylorSeriesScene })), { ssr: false })
 const PartialSumsScene = dynamic(() => import('./unit3/PartialSumsScene').then(m => ({ default: m.PartialSumsScene })), { ssr: false })
@@ -144,16 +145,25 @@ export function ParadigmVisualization({
     )
   }
 
+  // ── Unit 2: Improper integrals — Gabriel's Horn 3D scene ──────────────────
+  if (vc === 'ImproperIntegrals') {
+    return (
+      <div className="h-full w-full">
+        <ImproperIntegralsScene
+          paradigm={paradigm.id as 'infinite-bound' | 'vertical-asymptote'}
+          p={sv.p ?? 2}
+          B={sv.B ?? 20}
+          eps={sv.eps ?? 0.1}
+        />
+      </div>
+    )
+  }
+
   // ── Unit 2: Integration techniques — 2D function plots ─────────────────────
-  if (['TrigIntegrals', 'ImproperIntegrals'].includes(vc)) {
-    const fnMap: Record<string, (sv: Record<string, number>) => string> = {
-      TrigIntegrals:     (sv) => paradigm.id === 'tan-sec'
-                                   ? `tan(x)^${sv.m ?? 2} * sec(x)^2`
-                                   : `sin(x)^${sv.m ?? 2} * cos(x)^${sv.n ?? 3}`,
-      ImproperIntegrals: (sv) => `1 / x^${sv.p ?? 2}`,
-    }
-    const getFn = fnMap[vc]
-    const fn = getFn ? getFn(sv) : 'sin(x)'
+  if (vc === 'TrigIntegrals') {
+    const fn = paradigm.id === 'tan-sec'
+      ? `tan(x)^${sv.m ?? 2} * sec(x)^2`
+      : `sin(x)^${sv.m ?? 2} * cos(x)^${sv.n ?? 3}`
     return (
       <div className="h-full w-full">
         <FunctionPlot2D fn={fn} xMin={sv.a ?? -3} xMax={sv.b ?? 3} label={paradigm.title} />
