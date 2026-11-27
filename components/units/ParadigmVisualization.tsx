@@ -25,6 +25,8 @@ const SurfaceRevolutionScene = dynamic(() => import('./unit1/SurfaceRevolutionSc
 const ArcLengthScene = dynamic(() => import('./unit1/ArcLengthScene').then(m => ({ default: m.ArcLengthScene })), { ssr: false })
 const TrigIntegralsScene = dynamic(() => import('./unit2/TrigIntegralsScene').then(m => ({ default: m.TrigIntegralsScene })), { ssr: false })
 const WorkScene = dynamic(() => import('./unit1/WorkScene').then(m => ({ default: m.WorkScene })), { ssr: false })
+const CentersOfMassScene = dynamic(() => import('./unit1/CentersOfMassScene').then(m => ({ default: m.CentersOfMassScene })), { ssr: false })
+const FluidPressureScene = dynamic(() => import('./unit1/FluidPressureScene').then(m => ({ default: m.FluidPressureScene })), { ssr: false })
 
 function PartialSumsWrapper({ fn, numTerms, label }: { fn: string; numTerms: number; label: string }) {
   const parsedTerm = useMemo(() => parseExpression(fn, ['n']), [fn])
@@ -146,12 +148,32 @@ export function ParadigmVisualization({
     )
   }
 
-  // ── Unit 1/2: Generic function plot (remaining) ────────────────────────────
-  if (['CentersOfMass', 'FluidPressure'].includes(vc)) {
+  // ── Unit 1: Centers of Mass — region slab / density profile ─────────────
+  if (vc === 'CentersOfMass') {
     const fn = paradigm.inputs.type === 'single' ? (paradigm.inputs.fn ?? 'sin(x)') : 'sin(x)'
     return (
       <div className="h-full w-full">
-        <FunctionPlot2D fn={fn} xMin={sv.a ?? -3} xMax={sv.b ?? 3} label={paradigm.title} />
+        <CentersOfMassScene
+          paradigm={paradigm.id as 'region' | 'variable-density'}
+          fn={fn}
+          a={sv.a ?? 0}
+          b={sv.b ?? 3}
+          rho={sv.rho ?? 1}
+        />
+      </div>
+    )
+  }
+
+  // ── Unit 1: Fluid Pressure — pressure-gradient plate in water tank ────────
+  if (vc === 'FluidPressure') {
+    return (
+      <div className="h-full w-full">
+        <FluidPressureScene
+          paradigm={paradigm.id as 'flat-plate' | 'submerged'}
+          depth={sv.depth ?? 4}
+          width={sv.width ?? 3}
+          h={sv.h ?? 3}
+        />
       </div>
     )
   }
