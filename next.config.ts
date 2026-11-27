@@ -1,7 +1,7 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  transpilePackages: ['three'],
+  transpilePackages: ['three', '@react-three/fiber', '@react-three/drei'],
   serverExternalPackages: ['@lancedb/lancedb', '@xenova/transformers', 'pdf-parse'],
   turbopack: {
     resolveAlias: {
