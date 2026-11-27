@@ -21,6 +21,7 @@ const SequenceScene = dynamic(() => import('./unit3/SequenceScene').then(m => ({
 const FourierSeriesScene = dynamic(() => import('./unit3/FourierSeriesScene').then(m => ({ default: m.FourierSeriesScene })), { ssr: false })
 const ParametricCurveScene = dynamic(() => import('./unit4/ParametricCurveScene').then(m => ({ default: m.ParametricCurveScene })), { ssr: false })
 const PolarCurveScene = dynamic(() => import('./unit4/PolarCurveScene').then(m => ({ default: m.PolarCurveScene })), { ssr: false })
+const SurfaceRevolutionScene = dynamic(() => import('./unit1/SurfaceRevolutionScene').then(m => ({ default: m.SurfaceRevolutionScene })), { ssr: false })
 
 function PartialSumsWrapper({ fn, numTerms, label }: { fn: string; numTerms: number; label: string }) {
   const parsedTerm = useMemo(() => parseExpression(fn, ['n']), [fn])
@@ -94,8 +95,23 @@ export function ParadigmVisualization({
     )
   }
 
+  // ── Unit 1: Surface of revolution — 3D scene ──────────────────────────────
+  if (vc === 'SurfaceRevolution') {
+    const fn = paradigm.inputs.type === 'single' ? (paradigm.inputs.fn ?? 'sqrt(x)') : 'sqrt(x)'
+    return (
+      <div className="h-full w-full">
+        <SurfaceRevolutionScene
+          paradigm={paradigm.id as 'x-axis' | 'y-axis'}
+          fn={fn}
+          a={sv.a ?? 0}
+          b={sv.b ?? 4}
+        />
+      </div>
+    )
+  }
+
   // ── Unit 1/2: Generic function plot (ArcLength, etc.) ──────────────────────
-  if (['ArcLength', 'SurfaceRevolution', 'CentersOfMass', 'Work', 'FluidPressure'].includes(vc)) {
+  if (['ArcLength', 'CentersOfMass', 'Work', 'FluidPressure'].includes(vc)) {
     const fn = paradigm.inputs.type === 'single' ? (paradigm.inputs.fn ?? 'sin(x)') : 'sin(x)'
     return (
       <div className="h-full w-full">
