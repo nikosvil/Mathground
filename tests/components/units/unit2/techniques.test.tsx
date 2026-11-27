@@ -17,6 +17,7 @@ import { NumericalIntegrationScene } from '@/components/units/unit2/NumericalInt
 import { IntegrationByPartsScene } from '@/components/units/unit2/IntegrationByPartsScene'
 import { TrigSubstitutionScene } from '@/components/units/unit2/TrigSubstitutionScene'
 import { PartialFractionsScene } from '@/components/units/unit2/PartialFractionsScene'
+import { ImproperIntegralsScene } from '@/components/units/unit2/ImproperIntegralsScene'
 
 describe('FunctionPlot2D', () => {
   it('renders a 2D function plot canvas', () => {
@@ -125,6 +126,37 @@ describe('PartialFractionsScene', () => {
   it('handles poles coinciding with x=0 without throwing', () => {
     expect(() =>
       render(<PartialFractionsScene paradigm="distinct-roots" a={-1} b={1} />)
+    ).not.toThrow()
+  })
+})
+
+describe('ImproperIntegralsScene', () => {
+  it('renders infinite-bound paradigm without throwing', () => {
+    expect(() =>
+      render(<ImproperIntegralsScene paradigm="infinite-bound" p={2} B={20} />)
+    ).not.toThrow()
+  })
+
+  it('infinite-bound scene has a canvas', () => {
+    render(<ImproperIntegralsScene paradigm="infinite-bound" p={2} B={20} />)
+    expect(screen.getByTestId('canvas')).toBeDefined()
+  })
+
+  it('renders vertical-asymptote paradigm without throwing', () => {
+    expect(() =>
+      render(<ImproperIntegralsScene paradigm="vertical-asymptote" p={0.5} eps={0.1} />)
+    ).not.toThrow()
+  })
+
+  it('handles p=1 boundary case without throwing', () => {
+    expect(() =>
+      render(<ImproperIntegralsScene paradigm="infinite-bound" p={1} B={50} />)
+    ).not.toThrow()
+  })
+
+  it('handles p>1 (converges) and p<1 (diverges) without throwing', () => {
+    expect(() =>
+      render(<ImproperIntegralsScene paradigm="vertical-asymptote" p={1.5} eps={0.01} />)
     ).not.toThrow()
   })
 })
